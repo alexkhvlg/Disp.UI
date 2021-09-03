@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es6",
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": false,
+        "checkJs": false
+    },
+    "baseUrl": "./",
+    "exclude": [
+        "node_modules",
+        "webpack",
+        "webpack-dev-server",
+        "bower",
+        "ember",
+        "jspm"
+    ],
+    // "include": [
+    //     "./sources/**/*"
+    // ],
+    "paths": {
+        "*": [
+            "sources/*"
+        ],
+        "views/*": [
+            "sources/views/*"
+        ],
+    }
+}
