@@ -16,27 +16,30 @@ export default class MainView extends JetView {
             layout: "y",
             select: true,
             template: "<span class='webix_icon fa-#icon#'></span> #value# ",
-            // data: [
-            //     {
-            //         value: "DashBoard",
-            //         id: "start",
-            //         icon: "envelope-o"
-            //     },
-            //     {
-            //         value: "Data",
-            //         id: "data",
-            //         icon: "briefcase"
-            //     }
-            // ]
+            data: [
+                {
+                    value: "DashBoard",
+                    id: "start",
+                    icon: "envelope-o"
+                },
+                {
+                    value: "Data",
+                    id: "data",
+                    icon: "briefcase"
+                }
+            ]
         };
 
         var logout = {
             view: "button",
             label: "Logout",
             click: () => {
-                    this.show("/logout").catch((e) => {
-                        console.log("error: ");
+                this.app.getService("user").logout()
+                    .catch((e) => {
                         console.log(e);
+                    })
+                    .finally(() => {
+                        this.show("/login")
                     })
             }
         };
@@ -45,7 +48,7 @@ export default class MainView extends JetView {
             type: "line",
             cols: [
                 {
-                    type: "clean",
+                    // type: "clean",
                     css: "app-left-panel",
                     padding: 10,
                     margin: 20,
@@ -58,7 +61,7 @@ export default class MainView extends JetView {
                             height: 10
                         },
                         {
-                            type: "clean",
+                            // type: "clean",
                             css: "app-right-panel",
                             padding: 4,
                             rows: [
