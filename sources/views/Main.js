@@ -1,75 +1,21 @@
 "use restrict";
 
 import { JetView, plugins } from "webix-jet";
+import HeaderToolBar from "views/HeaderToolbar";
+import SideBar from "views/SideBar";
+import TaskTable from "views/TaskTable";
+import { Dictionaries } from "../models/dictionaries";
 
 export default class MainView extends JetView {
     config() {
-        var header = {
-            type: "header",
-            template: this.app.config.name
-        };
-
-        var menu = {
-            view: "menu",
-            id: "top:menu",
-            width: 180,
-            layout: "y",
-            select: true,
-            template: "<span class='webix_icon fa-#icon#'></span> #value# ",
-            data: [
-                {
-                    value: "DashBoard",
-                    id: "start",
-                    icon: "envelope-o"
-                },
-                {
-                    value: "Data",
-                    id: "data",
-                    icon: "briefcase"
-                }
-            ]
-        };
-
-        var logout = {
-            view: "button",
-            label: "Logout",
-            click: () => {
-                this.app.getService("user").logout()
-                    .catch((e) => {
-                        console.log(e);
-                    })
-                    .finally(() => {
-                        this.show("/login")
-                    })
-            }
-        };
 
         var ui = {
-            type: "line",
-            cols: [
+            rows: [
+                HeaderToolBar,
                 {
-                    // type: "clean",
-                    css: "app-left-panel",
-                    padding: 10,
-                    margin: 20,
-                    borderless: true,
-                    rows: [header, menu, logout]
-                },
-                {
-                    rows: [
-                        {
-                            height: 10
-                        },
-                        {
-                            // type: "clean",
-                            css: "app-right-panel",
-                            padding: 4,
-                            rows: [
-                                {
-                                    $subview: true
-                                }
-                            ]
-                        }
+                    cols: [
+                        SideBar,
+                        TaskTable
                     ]
                 }
             ]
@@ -78,7 +24,29 @@ export default class MainView extends JetView {
 
         return ui;
     }
-    init() {
-        this.use(plugins.Menu, "top:menu");
+
+    async LoadDictionaries() {
+        console.log("Loading dictionaries..");
+        let ClusterCompanies = await Dictionaries("ClusterCompanies");
+        let Companies = await Dictionaries("Companies");
+        let GroupWorkTypes = await Dictionaries("GroupWorkTypes");
+        let Members = await Dictionaries("Members");
+        let Person = await Dictionaries("Person");
+        let Positions = await Dictionaries("Positions");
+        let Priorities = await Dictionaries("Priorities");
+        let Roles = await Dictionaries("Roles");
+        let Rules = await Dictionaries("Rules");
+        let ServiceAttributes = await Dictionaries("ServiceAttributes");
+        let ServiceObjects = await Dictionaries("ServiceObjects");
+        let ServiceObjectTypes = await Dictionaries("ServiceObjectTypes");
+        let Stages = await Dictionaries("Stages");
+        let Stickers = await Dictionaries("Stickers");
+        let TaskTypes = await Dictionaries("TaskTypes");
+        let WorkTypes = await Dictionaries("WorkTypes");
+        console.log("done");
+    }
+
+    async ready() {
+        await this.LoadDictionaries();
     }
 }

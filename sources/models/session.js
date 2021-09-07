@@ -1,10 +1,10 @@
-import { log } from "debug";
+'use strict';
 
 function status() {
     console.log("https://dev2.im-dispatcher.ru/api/v1/auth/status");
     return new Promise((resolve, reject) => {
-        resolve("ok")
-    })
+        resolve(localStorage.getItem("accessToken"));
+    });
 }
 
 function login(login, password) {
@@ -14,14 +14,21 @@ function login(login, password) {
         returnUrl: "/"
     }
     console.log("https://dev2.im-dispatcher.ru/api/v1/auth/token");
-    return webix.ajax()
+    var result = webix.ajax()
         .headers({"Content-type": "application/json"})
         .post("https://dev2.im-dispatcher.ru/api/v1/auth/token", request_body)
+        .then((a) => {
+            let json = a.json();
+            localStorage.setItem("accessToken", json.accessToken);
+            return a;
+        })
+    return result;
 }
 
 function logout() {
     console.log("https://dev2.im-dispatcher.ru/api/v1/auth/logout");
     return new Promise((resolve, reject) => {
+        localStorage.removeItem("accessToken");
         resolve("ok")
     })
 }

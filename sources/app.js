@@ -16,7 +16,10 @@ export default class App extends JetApp {
 
 		super({ ...defaults, ...config });
 
-		this.use(plugins.User, { model: session });
+		this.use(plugins.User, {
+			model: session,
+			ping: null
+		});
 	}
 }
 

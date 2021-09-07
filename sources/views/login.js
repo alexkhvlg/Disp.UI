@@ -33,9 +33,6 @@ export default class LoginView extends JetView {
         if (form.validate()) {
             const data = form.getValues();
             user.login(data.login, data.pass)
-                .then(() => {
-                    console.log(user.getUser().json());
-                })
                 .catch(() => {
                     webix.html.removeCss(form.$view, "invalid_login");
                     form.elements.pass.focus();
