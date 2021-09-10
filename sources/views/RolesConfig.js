@@ -6,6 +6,7 @@ import { my_fetch } from "../Tools";
 export default class Roles extends JetView {
     RolesToCreate = [];
     RolesToRemove = [];
+    RolesConfig = undefined;
     RoleList = undefined;
     RulesTable = undefined;
     roles = undefined;
@@ -131,6 +132,7 @@ export default class Roles extends JetView {
     }
 
     ready() {
+        this.RolesConfig = webix.$$("RolesConfig");
         this.RolesList = webix.$$("RolesList")
         this.RulesTable = webix.$$("RulesTable");
 
@@ -180,38 +182,50 @@ export default class Roles extends JetView {
     }
 
     async ShowRules(role) {
-        let roleRules = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/roles/" + role.id + "/rules");
-
-        let data = [];
-        this.rules.forEach(rule => {
-            let roleRule = roleRules.find(rr => rr.ruleCode == rule.code);
-            if (roleRule !== undefined) {
-                if (rule.isCrudOpererationRule) {
-                    let item = {
-                        Code: rule.code,
-                        Name: rule.name,
-                        Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
-                    }
-                    data.push(item);
-                }
-                else {
-                    let item = {
-                        Code: rule.code,
-                        Name: rule.name,
-                        Create: rule.allowChangeFlagCanCreate ? roleRule.canCreate : undefined,
-                        Read: rule.allowChangeFlagCanRead ? roleRule.canRead : undefined,
-                        Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
-                        Delete: rule.allowChangeFlagCanDelete ? roleRule.canDelete : undefined,
-                    }
-                    data.push(item);
-                }
-            }
-        });
-        data = data.sort(function (a, b) {
-            return a.Code.localeCompare(b.Code, undefined, { numeric: true, sensitivity: 'base' });
-        });
         this.RulesTable.clearAll();
-        this.RulesTable.parse(data);
+        try {
+            webix.extend(this.RolesConfig, webix.ProgressBar);
+            this.RolesConfig.showProgress({
+                type: "icon",
+            });
+            let roleRules = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/roles/" + role.id + "/rules");
+
+            let data = [];
+            this.rules.forEach(rule => {
+                let roleRule = roleRules.find(rr => rr.ruleCode == rule.code);
+                if (roleRule !== undefined) {
+                    if (rule.isCrudOpererationRule) {
+                        let item = {
+                            Code: rule.code,
+                            Name: rule.name,
+                            Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
+                        }
+                        data.push(item);
+                    }
+                    else {
+                        let item = {
+                            Code: rule.code,
+                            Name: rule.name,
+                            Create: rule.allowChangeFlagCanCreate ? roleRule.canCreate : undefined,
+                            Read: rule.allowChangeFlagCanRead ? roleRule.canRead : undefined,
+                            Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
+                            Delete: rule.allowChangeFlagCanDelete ? roleRule.canDelete : undefined,
+                        }
+                        data.push(item);
+                    }
+                }
+            });
+            data = data.sort(function (a, b) {
+                return a.Code.localeCompare(b.Code, undefined, { numeric: true, sensitivity: 'base' });
+            });
+            this.RulesTable.parse(data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+        finally {
+            this.RolesConfig.hideProgress();
+        }
     }
 
     async OnSave() {
