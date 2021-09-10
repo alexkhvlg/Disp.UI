@@ -1,32 +1,31 @@
 'use strict';
 
+import { LoadDictionaries } from "./dictionaries";
+
 function status() {
-    console.log("https://dev2.im-dispatcher.ru/api/v1/auth/status");
     return new Promise((resolve, reject) => {
         resolve(localStorage.getItem("accessToken"));
     });
 }
 
-function login(login, password) {
+async function login(login, password) {
     let request_body = {
         login: login,
         password: password,
         returnUrl: "/"
     }
-    console.log("https://dev2.im-dispatcher.ru/api/v1/auth/token");
-    var result = webix.ajax()
+    var response = await webix.ajax()
         .headers({"Content-type": "application/json"})
-        .post("https://dev2.im-dispatcher.ru/api/v1/auth/token", request_body)
-        .then((a) => {
-            let json = a.json();
-            localStorage.setItem("accessToken", json.accessToken);
-            return a;
-        })
-    return result;
+        .post("https://dev2.im-dispatcher.ru/api/v1/auth/token", request_body);
+    var json = await response.json();
+    localStorage.setItem("accessToken", json.accessToken);
+
+    await LoadDictionaries();
+
+    return json;
 }
 
 function logout() {
-    console.log("https://dev2.im-dispatcher.ru/api/v1/auth/logout");
     return new Promise((resolve, reject) => {
         localStorage.removeItem("accessToken");
         resolve("ok")

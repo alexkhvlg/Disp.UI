@@ -13,56 +13,93 @@ function header(method_name) {
     };
 }
 
-async function my_fetch(url, method_name) {
+async function my_fetch(method_name, url) {
     let response = await fetch(url, header(method_name));
     return await response.json();
 }
 
-export async function Dictionaries(name) {
+async function Dictionaries(name) {
+    let result = "";
     switch (name) {
         case "ClosingDescriptions":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/closingresults", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/closingdescriptions");
+            break;
         case "ClosingResults":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/closingresults", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/closingresults");
+            break;
         case "ClusterCompanies":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/clustercompanies", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/clustercompanies");
+            break;
         case "Companies":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/companies", 'GET');
-        case "Files":
-            return await my_fetch("/https://dev2.im-dispatcher.ru/api/v1/files", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/companies");
+            break;
         case "GroupWorkTypes":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/groupworktypes", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/groupworktypes");
+            break;
         case "Members":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/members", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/members");
+            break;
         case "Person":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/person", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/person");
+            break;
         case "Positions":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/positions", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/positions");
+            break;
         case "Priorities":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/priorities", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/priorities");
+            break;
         case "Roles":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/roles", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/roles");
+            break;
         case "Rules":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/rules", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/rules");
+            break;
         case "ServiceAttributes":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/serviceattributes", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/serviceattributes");
+            break;
         case "ServiceObjects":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/serviceobjects", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/serviceobjects");
+            break;
         case "ServiceObjectTypes":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/serviceobjecttypes", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/serviceobjecttypes");
+            break;
         case "Stages":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/stages", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/stages");
+            break;
         case "Stickers":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/stickers", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/stickers");
+            break;
         case "Tasks":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/tasks", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/tasks");
+            break;
         case "TaskTypes":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/tasktypes", 'GET');
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/tasktypes");
+            break;
         case "WorkTypes":
-            return await my_fetch("https://dev2.im-dispatcher.ru/api/v1/worktypes", 'GET');
-        default:
-            return new Promise((reslove) => {
-                reslove(null);
-            });
+            result = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/worktypes");
+            break;
     }
+    localStorage.setItem(name, JSON.stringify(result));
+    return result;
+}
+
+export async function LoadDictionaries() {
+    console.log("Loading dictionaries..");
+    let ClusterCompanies = await Dictionaries("ClusterCompanies");
+    let Companies = await Dictionaries("Companies");
+    let GroupWorkTypes = await Dictionaries("GroupWorkTypes");
+    let Members = await Dictionaries("Members");
+    let Person = await Dictionaries("Person");
+    let Positions = await Dictionaries("Positions");
+    let Priorities = await Dictionaries("Priorities");
+    let Roles = await Dictionaries("Roles");
+    let Rules = await Dictionaries("Rules");
+    let ServiceAttributes = await Dictionaries("ServiceAttributes");
+    let ServiceObjects = await Dictionaries("ServiceObjects");
+    let ServiceObjectTypes = await Dictionaries("ServiceObjectTypes");
+    let Stages = await Dictionaries("Stages");
+    let Stickers = await Dictionaries("Stickers");
+    let TaskTypes = await Dictionaries("TaskTypes");
+    let WorkTypes = await Dictionaries("WorkTypes");
+    console.log("done");
 }

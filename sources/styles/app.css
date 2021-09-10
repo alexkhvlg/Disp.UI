@@ -77,5 +77,46 @@
 }
 
 #map {
-    width: 100%; height: 100%; padding: 0; margin: 0;
+    width  : 100%;
+    height : 100%;
+    padding: 0;
+    margin : 0;
+}
+
+.app_name_label {
+    font-size: xx-large;
+    width    : 30%;
+}
+
+.custom_dark {
+    background    : #565B67;
+    font-size     : 14px;
+    color         : #ffffff;
+    font-weight   : normal;
+    letter-spacing: 1px;
+    text-align    : center;
+}
+
+.custom_dark .webix_template {
+    line-height: 40px;
+}
+
+.avatar .mainphoto {
+    border-radius: 25px;
+    widows       : 40px;
+    height       : 40px;
+    position     : relative;
+    top          : -4px;
+}
+
+/* .logo{
+	background:url(logo.svg) 2px -7px no-repeat;
+} */
+
+.custom_role_checkbox {
+    cursor     : pointer;
+}
+
+.role_list .webix_list_item.webix_selected {
+    font-weight: bold;
 }

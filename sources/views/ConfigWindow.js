@@ -23,6 +23,12 @@ export class ConfigWindow extends MyWindow {
                         {
                             value: "Организации"
                         },
+                        {
+                            value: "Типы объектов обслуживания"
+                        },
+                        {
+                            value: "Объекты обслуживания"
+                        }
                     ]
                 }, {
 

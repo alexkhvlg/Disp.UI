@@ -1,52 +1,103 @@
 "use restrict";
 
 import { JetView, plugins } from "webix-jet";
-import HeaderToolBar from "views/HeaderToolbar";
-import SideBar from "views/SideBar";
 import TaskTable from "views/TaskTable";
-import { Dictionaries } from "../models/dictionaries";
+// import { ConfigWindow } from "./ConfigWindow";
 
 export default class MainView extends JetView {
     config() {
 
-        var ui = {
-            rows: [
-                HeaderToolBar,
+        const header = {
+            type: "header",
+            css: "custom_dark",
+            height: 40,
+            template: "Задания"
+        };
+
+        const sidebar = {
+            localId: "menu",
+            view: "sidebar",
+            css: "webix_dark",
+            width: 200,
+            data: [
                 {
-                    cols: [
-                        SideBar,
-                        TaskTable
-                    ]
+                    value: "Новые"
+                },
+                {
+                    value: "Прочитанные",
+                },
+                {
+                    value: "Назначенные",
+                },
+                {
+                    value: "В работе",
+                },
+                {
+                    value: "В ожидании",
+                },
+                {
+                    value: "Отклоненные",
+                },
+                {
+                    value: "Закрытые",
+                }
+            ]
+        };
+
+        const toolbar = {
+            view: "toolbar",
+            padding: 9,
+            height: 40,
+            cols: [
+                {},
+                {
+                },
+                {
+                    view: "icon",
+                    icon: "mdi mdi-cog-outline",
+                    click: () => this.OnShowConfigClick()
+                },
+                {
+                    view: "icon",
+                    icon: "mdi mdi-logout",
+                    click: () => this.OnLogoutClick()
                 }
             ]
         };
 
 
-        return ui;
+        return {
+            type: "clean",
+            cols: [
+                {
+                    rows: [
+                        header,
+                        sidebar
+                    ]
+                },
+                {
+                    rows: [
+                        toolbar,
+                        TaskTable
+                    ]
+                }
+            ]
+        };
     }
 
-    async LoadDictionaries() {
-        console.log("Loading dictionaries..");
-        let ClusterCompanies = await Dictionaries("ClusterCompanies");
-        let Companies = await Dictionaries("Companies");
-        let GroupWorkTypes = await Dictionaries("GroupWorkTypes");
-        let Members = await Dictionaries("Members");
-        let Person = await Dictionaries("Person");
-        let Positions = await Dictionaries("Positions");
-        let Priorities = await Dictionaries("Priorities");
-        let Roles = await Dictionaries("Roles");
-        let Rules = await Dictionaries("Rules");
-        let ServiceAttributes = await Dictionaries("ServiceAttributes");
-        let ServiceObjects = await Dictionaries("ServiceObjects");
-        let ServiceObjectTypes = await Dictionaries("ServiceObjectTypes");
-        let Stages = await Dictionaries("Stages");
-        let Stickers = await Dictionaries("Stickers");
-        let TaskTypes = await Dictionaries("TaskTypes");
-        let WorkTypes = await Dictionaries("WorkTypes");
-        console.log("done");
+    OnLogoutClick() {
+        this.app.getService("user").logout()
+            .finally(() => {
+                this.show("/login")
+            })
     }
 
-    async ready() {
-        await this.LoadDictionaries();
+    OnShowConfigClick() {
+        // this.configWin.Show("Настройки");
+        this.app.show("/Config/RolesConfig");
+    }
+
+    init() {
+        // this.configWin = new ConfigWindow(this, "Config");
     }
 }

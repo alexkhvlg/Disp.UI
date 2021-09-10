@@ -87,14 +87,14 @@ export class MyWindow extends JetView {
                     view: "button",
                     id: this.#MinMaxWindowButtonId,
                     // value: "&#128470;&#xFE0E;",
-                    width: 36,
+                    width: 30,
                     css: "webix_primary",
                     click: () => this.MinMaxWindow()
                 },
                 {
                     view: "button",
                     // value: "&#128473;&#xFE0E;",
-                    width: 36,
+                    width: 30,
                     css: "webix_danger",
                     click: () => {
                         $$(this.#ViewId).hide();

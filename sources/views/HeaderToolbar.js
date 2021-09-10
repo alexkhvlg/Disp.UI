@@ -20,7 +20,7 @@ export default class HeaderToolBarView extends JetView {
                 },
                 {
                     view: "label",
-                    label: "Электронный журнал",
+                    label: "Disp.UI",
                     align: "center"
                 }, {
                     id: "ConfigButton",

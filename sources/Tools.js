@@ -1,5 +1,23 @@
 "use strict";
 
+function header(method_name) {
+    let token = localStorage.getItem("accessToken");
+    return {
+        method: method_name,
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }
+    };
+}
+
+async function my_fetch(method_name, url) {
+    let response = await fetch(url, header(method_name));
+    return await response.json();
+}
+
 async function GetRest(url, parameter = null) {
     let _url = url;
     if (parameter !== null) {
@@ -190,4 +208,4 @@ async function PerformAsync(id, func) {
     }
 }
 
-export { GetRest, PostRest, DeleteRest, ui, DateISO8601, PrintDebug, SetComboValues, unix_to_date, PerformAsync };
+export { my_fetch, GetRest, PostRest, DeleteRest, ui, DateISO8601, PrintDebug, SetComboValues, unix_to_date, PerformAsync };
