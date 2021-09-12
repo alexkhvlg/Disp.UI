@@ -4,136 +4,17 @@ import { JetView } from "webix-jet";
 import { my_fetch } from "../Tools";
 
 export default class Roles extends JetView {
-    RolesToCreate = [];
-    RolesToRemove = [];
-    RolesConfig = undefined;
-    RoleList = undefined;
-    RulesTable = undefined;
-    roles = undefined;
-    rules = undefined;
-
-    config() {
-        return {
-            id: "RolesConfig",
-            // type: "space",
-            rows: [
-                {
-                    // margin: 5,
-                    cols: [
-                        {
-                            gravity: 1,
-                            rows: [
-                                {
-                                    id: "RolesList",
-                                    name: "RolesList",
-                                    view: "list",
-                                    template: "#name#",
-                                    select: true,
-                                    autowidth: true,
-                                    css: "role_list",
-                                    on: {
-                                        onSelectChange: async () => {
-                                            let role = this.RolesList.getSelectedItem();
-                                            await this.ShowRules(role);
-                                        }
-                                    }
-                                },
-                                {
-                                    cols: [
-                                        {
-                                            view: "button",
-                                            value: "Создать",
-                                            autowidth: true,
-                                            click: () => this.CreateRole()
-                                        },
-                                        {},
-                                        {
-                                            view: "button",
-                                            value: "Удалить",
-                                            autowidth: true,
-                                            click: () => this.RemoveRole()
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            gravity: 4,
-                            id: "RulesTable",
-                            name: "RulesTable",
-                            view: "datatable",
-                            editable: true,
-                            checkboxRefresh: true,
-                            type: {
-                                checkbox: function (obj, common, value, config) {
-                                    if (value === true || value === false) {
-                                        return "<input class='webix_table_checkbox' type='checkbox' " + (value ? "checked" : "") + " >";
-                                    }
-                                    return "";
-                                }
-                            },
-                            columns: [
-                                {
-                                    id: "Code",
-                                    header: "Код"
-                                },
-                                {
-                                    id: "Name",
-                                    header: "Название",
-                                    fillspace: true
-                                },
-                                {
-                                    id: "Create",
-                                    header: "Создать",
-                                    template: "{common.checkbox()}",
-                                    checkValue: true,
-                                    uncheckValue: false,
-                                },
-                                {
-                                    id: "Read",
-                                    header: "Читать",
-                                    template: "{common.checkbox()}",
-                                    checkValue: true,
-                                    uncheckValue: false,
-                                },
-                                {
-                                    id: "Edit",
-                                    template: "{common.checkbox()}",
-                                    checkValue: true,
-                                    uncheckValue: false,
-                                },
-                                {
-                                    id: "Delete",
-                                    template: "{common.checkbox()}",
-                                    checkValue: true,
-                                    uncheckValue: false,
-                                },
-                            ],
-                        }
-                    ]
-                },
-                {
-                    cols: [
-                        {
-
-                        },
-                        {
-                            view: "button",
-                            label: "Сохранить",
-                            autowidth: true,
-                            css: "webix_primary",
-                            click: async () => await this.OnSave()
-                        }
-                    ]
-                }
-            ]
-
-        };
-    }
+    RolesToCreate = []; // roles list to create
+    RolesToDelete = []; // roles list to delete
+    RolesConfig = undefined; // this control
+    RolesList = undefined; // roles list control
+    RulesTable = undefined; // rules table control
+    roles = undefined; // role objects list
+    rules = undefined; // rule objects list
 
     ready() {
         this.RolesConfig = webix.$$("RolesConfig");
-        this.RolesList = webix.$$("RolesList")
+        this.RolesList = webix.$$("RolesList");
         this.RulesTable = webix.$$("RulesTable");
 
         this.rules = JSON.parse(localStorage.getItem("Rules"));
@@ -143,6 +24,138 @@ export default class Roles extends JetView {
         this.RolesList.parse(this.roles);
         // Select first role
         this.RolesList.select(this.RolesList.getFirstId());
+    }
+    
+    config() {
+
+        const rolesListLabelUi = {
+            view: "label",
+            label: "Роли",
+        };
+
+        const rolesListUi = {
+            id: "RolesList",
+            name: "RolesList",
+            view: "list",
+            template: "#name#",
+            select: true,
+            // autowidth: true,
+            css: "role_list",
+            on: {
+                onSelectChange: async () => {
+                    let role = this.RolesList.getSelectedItem();
+                    await this.ShowRules(role);
+                }
+            }
+        };
+
+        const createDeleteToolbarUi = {
+            cols: [
+                {
+                    view: "button",
+                    value: "Создать",
+                    autowidth: true,
+                    css: "webix_primary",
+                    click: () => this.CreateRole()
+                },
+                {},
+                {
+                    view: "button",
+                    value: "Удалить",
+                    autowidth: true,
+                    css: "webix_primary",
+                    click: () => this.DeleteRole()
+                },
+            ]
+        };
+
+        const rulesTableLabelUi = {
+            view: "label",
+            label: "Права",
+        };
+
+        const rulesTableUi = {
+            id: "RulesTable",
+            name: "RulesTable",
+            view: "datatable",
+            editable: true,
+            checkboxRefresh: true,
+            tooltip: true,
+            type: {
+                checkbox: function (obj, common, value) {
+                    if (value === true || value === false) {
+                        return "<input class='webix_table_checkbox' type='checkbox' " + (value ? "checked" : "") + " >";
+                    }
+                    return "";
+                }
+            },
+            columns: [
+                {
+                    id: "Code", header: "Код", 
+                    adjust: true
+                },
+                {
+                    id: "Name", header: "Название", 
+                    fillspace: true
+                },
+                {
+                    id: "Create", header: "Создать", 
+                    checkValue: true, uncheckValue: false, 
+                    template: "{common.checkbox()}"
+                },
+                {
+                    id: "Read", header: "Читать", 
+                    checkValue: true, uncheckValue: false, 
+                    template: "{common.checkbox()}", 
+                },
+                {
+                    id: "Edit", header: "Изменить", 
+                    checkValue: true, uncheckValue: false, 
+                    template: "{common.checkbox()}", 
+                },
+                {
+                    id: "Delete", header: "Удалить", 
+                    checkValue: true, uncheckValue: false, 
+                    template: "{common.checkbox()}",
+                },
+            ],
+        };
+
+        const saveButtonUi = {
+            cols: [
+                {},
+                {
+                    view: "button",
+                    label: "Сохранить",
+                    autowidth: true,
+                    css: "webix_primary",
+                    click: async () => await this.OnSave()
+                }
+            ]
+        };
+
+        return {
+            id: "RolesConfig",
+            type: "space",
+            cols: [
+                {
+                    gravity: 1,
+                    rows: [
+                        rolesListLabelUi,
+                        rolesListUi,
+                        createDeleteToolbarUi
+                    ]
+                },
+                {
+                    gravity: 4,
+                    rows: [
+                        rulesTableLabelUi,
+                        rulesTableUi,
+                        saveButtonUi
+                    ]
+                }
+            ]
+        };
     }
 
     CreateRole() {
@@ -165,7 +178,7 @@ export default class Roles extends JetView {
         });
     }
 
-    RemoveRole() {
+    DeleteRole() {
         let item = this.RolesList.getSelectedItem();
         this.webix.confirm({
             text: "Удалить роль '" + item.name + "' ?",
@@ -175,7 +188,7 @@ export default class Roles extends JetView {
             callback: (result) => {
                 if (result) {
                     this.RolesList.remove(item.id);
-                    this.RolesToRemove.push(item);
+                    this.RolesToDelete.push(item);
                 }
             }
         });
@@ -199,7 +212,7 @@ export default class Roles extends JetView {
                             Code: rule.code,
                             Name: rule.name,
                             Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
-                        }
+                        };
                         data.push(item);
                     }
                     else {
@@ -210,13 +223,13 @@ export default class Roles extends JetView {
                             Read: rule.allowChangeFlagCanRead ? roleRule.canRead : undefined,
                             Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
                             Delete: rule.allowChangeFlagCanDelete ? roleRule.canDelete : undefined,
-                        }
+                        };
                         data.push(item);
                     }
                 }
             });
             data = data.sort(function (a, b) {
-                return a.Code.localeCompare(b.Code, undefined, { numeric: true, sensitivity: 'base' });
+                return a.Code.localeCompare(b.Code, undefined, { numeric: true, sensitivity: "base" });
             });
             this.RulesTable.parse(data);
         }
@@ -230,6 +243,6 @@ export default class Roles extends JetView {
 
     async OnSave() {
         console.log(this.RolesToCreate);
-        console.log(this.RolesToRemove);
+        console.log(this.RolesToDelete);
     }
 }

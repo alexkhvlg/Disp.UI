@@ -4,64 +4,81 @@ import { JetView, plugins } from "webix-jet";
 
 export default class Config extends JetView {
     config() {
-        return {
-            id: "Config",
-            // type: "space",
-            rows: [
+        const toolbarUi = {
+            view: "toolbar",
+            css: "webix_dark",
+            cols: [
                 {
-                    view: "toolbar",
-                    css: "webix_dark",
-                    cols: [
+                    view: "button",
+                    label: "Назад",
+                    autowidth: true,
+                    click: () => this.app.show("/Main")
+                },
+                {},
+                {
+                    view: "label",
+                    label: "Настройки",
+                    align: "center"
+                },
+                {}
+            ]
+        };
+
+        const sidebarUi = {
+            view: "sidebar",
+            css: "webix_dark",
+            id: "ConfigWindowMenu",
+            localId: "ConfigWindowMenu",
+            data: [
+                {
+                    id: "WorkTypesConfig",
+                    value: "Виды работ"
+                },
+                {
+                    id: "RolesConfig",
+                    value: "Роли",
+                },
+                {
+                    id: "PositionsConfig",
+                    value: "Должности",
+                },
+                {
+                    value: "Организации и сотрудники",
+                    data: [
                         {
-                            view: "button",
-                            label: "Вернуться",
-                            autowidth: true,
-                            click: () => this.app.show("/Main")
+                            id: "CompaniesConfig",
+                            value: "Организации"
                         },
-                        {},
                         {
-                            view: "label",
-                            label: "Настройки",
-                            align: "center"
-                        }, 
-                        {}
+                            id: "UsersConfig",
+                            value: "Cотрудники"
+                        },
                     ]
                 },
                 {
-                    cols: [
+                    value: "Объекты обслуживания",
+                    data: [
                         {
-                            view: "sidebar",
-                            css: "webix_dark",
-                            id: "ConfigWindowMenu",
-                            localId: "ConfigWindowMenu",
-                            data: [
-                                {
-                                    id: "RolesConfig",
-                                    value: "Роли",
-                                    view: "button"
-                                },
-                                {
-                                    id: "PositionsConfig",
-                                    value: "Должности",
-                                    iew: "button"
-                                },
-                                {
-                                    id: "CompaniesConfig",
-                                    value: "Организации",
-                                    iew: "button"
-                                },
-                                {
-                                    id: "ServiceObjectTypesConfig",
-                                    value: "Типы объектов обслуживания",
-                                    iew: "button"
-                                },
-                                {
-                                    id: "ServiceObjectsConfig",
-                                    value: "Объекты обслуживания",
-                                    iew: "button"
-                                }
-                            ]
+                            id: "ServiceObjectTypesConfig",
+                            value: "Типы объектов обслуживания",
                         },
+                        {
+                            id: "ServiceObjectsConfig",
+                            value: "Объекты обслуживания",
+                        }
+                    ]
+                },
+                
+            ]
+        };
+
+        return {
+            rows: [
+                toolbarUi ,
+                {
+                    // type: "space",
+                    cols: [
+                        sidebarUi,
                         {
                             $subview: true
                         }

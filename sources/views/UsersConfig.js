@@ -1,62 +1,39 @@
 "use restrict";
 
 import { JetView } from "webix-jet";
-// import { my_fetch } from "../Tools";
+import { my_fetch } from "../Tools";
 
-export default class CompaniesConfig extends JetView {
-    ClusterCompaniesToCreate = [] // cluster companies list to create
-    ClusterCompaniesToDelete = [] // cluster companies list to delete
+export default class UsersConfig extends JetView {
     CompaniesToCreate = []; // companies list to create
     CompaniesToDelete = []; // companies list to delete
-    CompaniesConfig = undefined; // this control
-    ClusterCompaniesList = undefined; // companies companies list control
-    CompaniesList = undefined; // members list control
-    clusterCompanies = undefined; // companies objects list
-    companies = undefined; // members objects list
+    UsersConfig = undefined; // this control
+    CompaniesList = undefined; // companies list control
+    MembersList = undefined; // members list control
+    companies = undefined; // companies objects list
+    members = undefined; // members objects list
 
     ready() {
-        this.CompaniesConfig = webix.$$("CompaniesConfig");
-        this.ClusterCompaniesList = webix.$$("ClusterCompaniesList");
+        this.UsersConfig = webix.$$("UsersConfig");
         this.CompaniesList = webix.$$("CompaniesList");
+        this.MembersList = webix.$$("MembersList");
 
-        this.companies = JSON.parse(localStorage.getItem("Companies"));
+        this.members = JSON.parse(localStorage.getItem("Members"));
         
-        // Fill cluster companies list control
-        this.clusterCompanies = JSON.parse(localStorage.getItem("ClusterCompanies"));
-        this.ClusterCompaniesList.parse(this.clusterCompanies);
+        // Fill companies list control
+        this.companies = JSON.parse(localStorage.getItem("Companies"));
+        this.CompaniesList.parse(this.companies);
         // Select first position
-        this.ClusterCompaniesList.select(this.ClusterCompaniesList.getFirstId());
+        this.CompaniesList.select(this.CompaniesList.getFirstId());
     }
     
     config() {
 
-        const clusterCompaniesListLabelUi = {
-            view: "label",
-            label: "Кластеры организаций",
-        };
-
-        const clusterCompaniesListUi = {
-            id: "ClusterCompaniesList",
-            name: "ClusterCompaniesList",
-            view: "list",
-            template: "#name#",
-            select: true,
-            autowidth: true,
-            css: "role_list",
-            on: {
-                onSelectChange: async () => {
-                    let clusterCompany = this.ClusterCompaniesList.getSelectedItem();
-                    await this.ShowClusterCompanies(clusterCompany);
-                }
-            }
-        };
-
-        const companiesListLabelUi = {
+        const companyListLabelUi = {
             view: "label",
             label: "Организации",
         };
 
-        const companiesListUi = {
+        const companyListUi = {
             id: "CompaniesList",
             name: "CompaniesList",
             view: "list",
@@ -67,7 +44,28 @@ export default class CompaniesConfig extends JetView {
             on: {
                 onSelectChange: async () => {
                     let company = this.CompaniesList.getSelectedItem();
-                    this.ShowCompanyInfo(company);
+                    await this.ShowMembers(company);
+                }
+            }
+        };
+
+        const userListLabelUi = {
+            view: "label",
+            label: "Пользователи",
+        };
+
+        const userListUi = {
+            id: "MembersList",
+            name: "MembersList",
+            view: "list",
+            template: "#person.fullName#",
+            select: true,
+            autowidth: true,
+            css: "role_list",
+            on: {
+                onSelectChange: async () => {
+                    let member = this.MembersList.getSelectedItem();
+                    this.ShowMemberInfo(member);
                 }
             }
         };
@@ -104,22 +102,22 @@ export default class CompaniesConfig extends JetView {
         };
 
         return {
-            id: "CompaniesConfig",
+            id: "UsersConfig",
             type: "space",
             cols: [
                 {
                     gravity: 1,
                     rows: [
-                        clusterCompaniesListLabelUi,
-                        clusterCompaniesListUi,
+                        companyListLabelUi,
+                        companyListUi,
                         createDeleteToolbarUi
                     ]
                 },
                 {
                     gravity: 4,
                     rows: [
-                        companiesListLabelUi,
-                        companiesListUi,
+                        userListLabelUi,
+                        userListUi,
                         saveButtonUi
                     ]
                 }
@@ -129,7 +127,7 @@ export default class CompaniesConfig extends JetView {
 
     CreateCompany() {
         webix.prompt({
-            text: "Новый кластер организаций",
+            text: "Новая организация",
             ok: "Да",
             cancel: "Нет",
             input: {
@@ -141,39 +139,47 @@ export default class CompaniesConfig extends JetView {
                 id: this.CompaniesToCreate.length,
                 name: result,
             };
-            this.ClusterCompaniesList.add(newItem);
-            this.ClusterCompaniesList.select(newItem.id);
+            this.CompaniesList.add(newItem);
+            this.CompaniesList.select(newItem.id);
             this.CompaniesToCreate.push(newItem);
         });
     }
 
     DeleteCompany() {
-        let item = this.ClusterCompaniesList.getSelectedItem();
+        let item = this.CompaniesList.getSelectedItem();
         this.webix.confirm({
-            text: "Удалить кластер организаций '" + item.name + "' ?",
+            text: "Удалить организацию '" + item.name + "' ?",
             type: "confirm-warning",
             ok: "Да",
             cancel: "Нет",
             callback: (result) => {
                 if (result) {
-                    this.ClusterCompaniesList.remove(item.id);
+                    this.CompaniesList.remove(item.id);
                     this.CompaniesToDelete.push(item);
                 }
             }
         });
     }
 
-    ShowClusterCompanies(clusterCompany) {
-        this.CompaniesList.clearAll();
-        this.companies.forEach((company) => {
-            if (company.clusterCompanyId == clusterCompany.id){
-                console.log(company);
-                this.CompaniesList.add(company);
-            }
-        });
+    async ShowMembers(company) {
+        this.MembersList.clearAll();
+        try {
+            webix.extend(this.UsersConfig, webix.ProgressBar);
+            this.UsersConfig.showProgress({
+                type: "icon",
+            });
+            let companyMembers = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/companies/" + company.id + "/members");
+            this.MembersList.parse(companyMembers);
+        }
+        catch (e) {
+            console.log(e);
+        }
+        finally {
+            this.UsersConfig.hideProgress();
+        }
     }
 
-    ShowCompanyInfo(company) {
+    ShowMemberInfo(userInfo) {
 
     }
 

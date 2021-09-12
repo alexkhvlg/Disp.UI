@@ -3,6 +3,10 @@
 import { JetView } from "webix-jet";
 
 export default class ServiceObjectTypes extends JetView {
+
+    ready() {
+    }
+    
     config() {
         return {
             id: "ServiceObjectTypesConfig",
@@ -39,9 +43,6 @@ export default class ServiceObjectTypes extends JetView {
                 }
             ]
         };
-    }
-
-    ready() {
     }
 
     async OnSave() {

@@ -1,21 +1,21 @@
 "use restrict";
 
-import { JetView, plugins } from "webix-jet";
-import TaskTable from "views/TaskTable";
-// import { ConfigWindow } from "./ConfigWindow";
+import { JetView } from "webix-jet";
+import TaskTableView from "views/TaskTableView";
 
 export default class MainView extends JetView {
+    TaskTable = undefined;
+    taskStages = undefined;
+
     config() {
 
-        const header = {
-            type: "header",
-            css: "custom_dark",
-            height: 40,
-            template: "Задания"
+        const headerUi = {
+            view: "label",
+            label: "Задания"
         };
 
-        const sidebar = {
-            localId: "menu",
+        const sidebarUi = {
+            localId: "taskStages",
             view: "sidebar",
             css: "webix_dark",
             width: 200,
@@ -44,41 +44,53 @@ export default class MainView extends JetView {
             ]
         };
 
-        const toolbar = {
+        const toolbarUi = {
             view: "toolbar",
             padding: 9,
             height: 40,
             cols: [
                 {},
-                {
-                },
+                headerUi,
                 {
                     view: "icon",
                     icon: "mdi mdi-cog-outline",
+                    tooltip: "Настройки",
                     click: () => this.OnShowConfigClick()
                 },
                 {
                     view: "icon",
                     icon: "mdi mdi-logout",
+                    tooltip: "Выход из системы",
                     click: () => this.OnLogoutClick()
                 }
             ]
         };
 
 
+        // return {
+        //     // type: "clean",
+        //     cols: [
+        //         {
+        //             rows: [
+        //                 header,
+        //                 sidebar
+        //             ]
+        //         },
+        //         {
+        //             rows: [
+        //                 toolbar,
+        //                 TaskTable
+        //             ]
+        //         }
+        //     ]
+        // };
         return {
-            type: "clean",
-            cols: [
+            rows: [
+                toolbarUi,
                 {
-                    rows: [
-                        header,
-                        sidebar
-                    ]
-                },
-                {
-                    rows: [
-                        toolbar,
-                        TaskTable
+                    cols: [
+                        sidebarUi,
+                        TaskTableView
                     ]
                 }
             ]
@@ -88,16 +100,18 @@ export default class MainView extends JetView {
     OnLogoutClick() {
         this.app.getService("user").logout()
             .finally(() => {
-                this.show("/login")
-            })
+                this.show("/login");
+            });
     }
 
     OnShowConfigClick() {
-        // this.configWin.Show("Настройки");
         this.app.show("/Config/RolesConfig");
     }
 
-    init() {
-        // this.configWin = new ConfigWindow(this, "Config");
+    ready() {
+        this.TaskTable = this.webix.$$("TaskTable");
+
+        this.taskStages = this.$$("taskStages");
+        this.taskStages.select(this.taskStages.getFirstId());
     }
 }

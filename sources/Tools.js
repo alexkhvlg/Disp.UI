@@ -5,10 +5,10 @@ function header(method_name) {
     return {
         method: method_name,
         withCredentials: true,
-        credentials: 'include',
+        credentials: "include",
         headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
         }
     };
 }
@@ -157,7 +157,8 @@ class DateISO8601 {
 }
 
 function PrintDebug(txt, ...args) {
-    if (true) {
+    const newLocal = true;
+    if (newLocal) {
         console.log("DEBUG |", txt, ...args);
     }
 }
@@ -174,7 +175,7 @@ function SetComboValues(id, values) {
 }
 
 function unix_to_date(s, options) {
-    return new Date(s * 1e3).toLocaleString('ru-RU', options);
+    return new Date(s * 1e3).toLocaleString("ru-RU", options);
 }
 
 async function PerformAsync(id, func) {

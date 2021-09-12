@@ -12,12 +12,10 @@ export class MyWindow extends JetView {
     #normalTop;
     #normalWidth;
     #normalHeight;
-    #firstLaunch;
 
     constructor(view, name) {
         super(view.app, name);
 
-        this.#firstLaunch = true;
         this.#ViewId = name;
         this.#CaptionId = name + "Caption";
         this.#MinMaxWindowButtonId = name + "MixMaxButton";
@@ -33,7 +31,6 @@ export class MyWindow extends JetView {
     async Show(caption) {
         $$(this.#CaptionId).setValue(caption);
         this.getRoot().show();
-        this.#firstLaunch = false;
     }
 
     MinMaxWindow() {

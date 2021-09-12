@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 function header(method_name) {
     let token = localStorage.getItem("accessToken");
     return {
         method: method_name,
         withCredentials: true,
-        credentials: 'include',
+        credentials: "include",
         headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
         }
     };
 }
@@ -18,7 +18,7 @@ async function my_fetch(method_name, url) {
     return await response.json();
 }
 
-async function Dictionaries(name) {
+async function LoadDictionary(name) {
     let result = "";
     switch (name) {
         case "ClosingDescriptions":
@@ -84,22 +84,20 @@ async function Dictionaries(name) {
 }
 
 export async function LoadDictionaries() {
-    console.log("Loading dictionaries..");
-    let ClusterCompanies = await Dictionaries("ClusterCompanies");
-    let Companies = await Dictionaries("Companies");
-    let GroupWorkTypes = await Dictionaries("GroupWorkTypes");
-    let Members = await Dictionaries("Members");
-    let Person = await Dictionaries("Person");
-    let Positions = await Dictionaries("Positions");
-    let Priorities = await Dictionaries("Priorities");
-    let Roles = await Dictionaries("Roles");
-    let Rules = await Dictionaries("Rules");
-    let ServiceAttributes = await Dictionaries("ServiceAttributes");
-    let ServiceObjects = await Dictionaries("ServiceObjects");
-    let ServiceObjectTypes = await Dictionaries("ServiceObjectTypes");
-    let Stages = await Dictionaries("Stages");
-    let Stickers = await Dictionaries("Stickers");
-    let TaskTypes = await Dictionaries("TaskTypes");
-    let WorkTypes = await Dictionaries("WorkTypes");
-    console.log("done");
+    await LoadDictionary("ClusterCompanies");
+    await LoadDictionary("Companies");
+    await LoadDictionary("GroupWorkTypes");
+    await LoadDictionary("Members");
+    await LoadDictionary("Person");
+    await LoadDictionary("Positions");
+    await LoadDictionary("Priorities");
+    await LoadDictionary("Roles");
+    await LoadDictionary("Rules");
+    await LoadDictionary("ServiceAttributes");
+    await LoadDictionary("ServiceObjects");
+    await LoadDictionary("ServiceObjectTypes");
+    await LoadDictionary("Stages");
+    await LoadDictionary("Stickers");
+    await LoadDictionary("TaskTypes");
+    await LoadDictionary("WorkTypes");
 }
