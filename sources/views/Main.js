@@ -105,7 +105,7 @@ export default class MainView extends JetView {
     }
 
     OnShowConfigClick() {
-        this.app.show("/Config/RolesConfig");
+        this.app.show("/Config/WorkTypesConfig");
     }
 
     ready() {
