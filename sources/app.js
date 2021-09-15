@@ -20,6 +20,10 @@ export default class App extends JetApp {
 			model: session,
 			ping: null
 		});
+
+		webix.protoUI({
+			name: "editlist"
+		}, webix.EditAbility, webix.ui.list);
 	}
 }
 

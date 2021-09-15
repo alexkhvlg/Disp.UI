@@ -9,11 +9,6 @@ export default class MainView extends JetView {
 
     config() {
 
-        const headerUi = {
-            view: "label",
-            label: "Задания"
-        };
-
         const sidebarUi = {
             localId: "taskStages",
             view: "sidebar",
@@ -46,11 +41,14 @@ export default class MainView extends JetView {
 
         const toolbarUi = {
             view: "toolbar",
-            padding: 9,
-            height: 40,
+            // height: 50,
+            paddingX: 10,
             cols: [
-                {},
-                headerUi,
+                {
+                    view: "label",
+                    label: "Disp.UI",
+                    align: "center"
+                },
                 {
                     view: "icon",
                     icon: "mdi mdi-cog-outline",
@@ -105,7 +103,7 @@ export default class MainView extends JetView {
     }
 
     OnShowConfigClick() {
-        this.app.show("/Config/WorkTypesConfig");
+        this.app.show("/Config/StickersConfig");
     }
 
     ready() {

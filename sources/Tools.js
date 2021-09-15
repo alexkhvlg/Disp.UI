@@ -1,21 +1,63 @@
 "use strict";
 
-function header(method_name) {
-    let token = localStorage.getItem("accessToken");
+function get_baseUrl(url) {
+    return "https://dev2.im-dispatcher.ru" + url;
+}
+
+function get_token() {
+    return localStorage.getItem("accessToken");
+}
+
+function generate_header(method_name, body) {
+    let json = null;
+    if (body !== null) {
+        json = JSON.stringify(body);
+    }
     return {
         method: method_name,
         withCredentials: true,
         credentials: "include",
         headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
-        }
+            "Authorization": "Bearer " + get_token(),
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: json
     };
 }
 
-async function my_fetch(method_name, url) {
-    let response = await fetch(url, header(method_name));
-    return await response.json();
+async function my_fetch(method_name, url, body = null) {
+    let response = await fetch(get_baseUrl(url), generate_header(method_name, body));
+    if (response.status == 200 || response.status == 201) {
+        return await response.json();
+    }
+    else {
+        if (response.status >= 400 && response.status < 500) {
+            let error = await response.json();
+            webix.alert({
+                title: error.title,
+                text: JSON.stringify(error.errors),
+                type: "alert-error"
+            });
+        }
+        else if (response.status >= 500 && response.status < 600) {
+            let error = await response.text();
+            webix.alert({
+                title: "Ошибка сервера",
+                text: error,
+                type: "alert-error"
+            });
+        }
+        else {
+            let error = await response.text();
+            webix.alert({
+                title: "Ошибка",
+                text: error,
+                type: "alert-error"
+            });
+        }
+        return undefined;
+    }
 }
 
 async function GetRest(url, parameter = null) {

@@ -321,6 +321,7 @@ export default class WorkTypesConfig extends JetView {
     }
 
     ShowWorkTypes(selectedGroupWorkType) {
+        this.StickersList.clearAll();
         this.WorkTypesList.clearAll();
         this.workTypes.forEach((workType) => {
             if (workType.groupWorkTypeId == selectedGroupWorkType.id) {

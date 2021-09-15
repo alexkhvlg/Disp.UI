@@ -31,6 +31,10 @@ export default class Config extends JetView {
             localId: "ConfigWindowMenu",
             data: [
                 {
+                    id: "StickersConfig",
+                    value: "Стикеры"
+                },
+                {
                     id: "WorkTypesConfig",
                     value: "Виды работ"
                 },

@@ -114,9 +114,17 @@
 } */
 
 .custom_role_checkbox {
-    cursor     : pointer;
+    cursor: pointer;
 }
 
 .role_list .webix_list_item.webix_selected {
     font-weight: bold;
+}
+
+.webix_trash_icon {
+    float      : right;
+    cursor     : default;
+    height     : 30px;
+    line-height: 30px;
+    text-align : center;
 }
