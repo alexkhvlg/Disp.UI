@@ -67,7 +67,7 @@ async function LoadDictionary(name) {
     return result;
 }
 
-export async function LoadDictionaries() {
+async function LoadDictionaries() {
     await LoadDictionary("ClusterCompanies");
     await LoadDictionary("Companies");
     await LoadDictionary("GroupWorkTypes");
@@ -85,3 +85,28 @@ export async function LoadDictionaries() {
     await LoadDictionary("TaskTypes");
     await LoadDictionary("WorkTypes");
 }
+
+function ClearDictionary(name) {
+    localStorage.removeItem(name);
+}
+
+function ClearDictionaries() {
+    ClearDictionary("ClusterCompanies");
+    ClearDictionary("Companies");
+    ClearDictionary("GroupWorkTypes");
+    ClearDictionary("Members");
+    ClearDictionary("Person");
+    ClearDictionary("Positions");
+    ClearDictionary("Priorities");
+    ClearDictionary("Roles");
+    ClearDictionary("Rules");
+    ClearDictionary("ServiceAttributes");
+    ClearDictionary("ServiceObjects");
+    ClearDictionary("ServiceObjectTypes");
+    ClearDictionary("Stages");
+    ClearDictionary("Stickers");
+    ClearDictionary("TaskTypes");
+    ClearDictionary("WorkTypes");
+}
+
+export { LoadDictionaries, ClearDictionaries };

@@ -2,6 +2,7 @@
 
 import { JetView } from "webix-jet";
 import TaskTableView from "views/TaskTableView";
+import { ClearDictionaries } from "../models/dictionaries";
 
 export default class MainView extends JetView {
     TaskTable = undefined;
@@ -98,6 +99,7 @@ export default class MainView extends JetView {
     OnLogoutClick() {
         this.app.getService("user").logout()
             .finally(() => {
+                ClearDictionaries();
                 this.show("/login");
             });
     }
