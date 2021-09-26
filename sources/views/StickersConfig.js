@@ -8,6 +8,14 @@ export default class StickersConfig extends JetView {
     StickersConfigId = "StickersConfig";
     StickersGridId = "StickersGrid";
 
+    ready() {
+        // webix.UIManager.addHotKey("enter", function (view) {
+        //     var pos = view.getSelectedId();
+        //     view.edit(pos);
+        // }, this.$$(this.StickersGridId));
+        this.LoadStickers();
+    }
+
     config() {
 
         const stickersGridHeaderUi = {
@@ -18,7 +26,7 @@ export default class StickersConfig extends JetView {
                 },
                 {
                     view: "button",
-                    value: "Добавить",
+                    value: "Создать",
                     autowidth: true,
                     css: "webix_primary",
                     click: async () => await this.AddStickerToGridDialog()
@@ -27,43 +35,40 @@ export default class StickersConfig extends JetView {
         };
 
         const stickersGridUi = {
+            id: this.StickersGridId,
             localId: this.StickersGridId,
             view: "datatable",
             columns: [
+                // { id: "id", header: "header" },
                 { id: "name", header: "Название", editor: "text", fillspace: true, sort: "string" },
-                { id: "actions", header: "Действия" },
+                { template: "{common.editIcon()}", width: 40 },
+                { template: "{common.trashIcon()}", width: 40 },
             ],
-            url: {
-                $proxy: true,
-                load: Sticker.LoadFromStorage
+            // select: true,
+            resizeColumn: true,
+            // resizeRow: true,
+            // autoupdate: true,
+            onClick: {
+                "wxi-trash": async (event, id) => {
+                    await this.RemoveStikerFromGridDialog(id);
+                },
+                "wxi-pencil": async (event,id) => {
+                    await this.UpdateStickerInGridDialog(id);
+                }
             },
-            // view: "editlist",
-            // template: "#name# <span class='webix_icon webix_trash_icon wxi-trash delete_icon'></span>",
-            select: true,
-            editable: true,
-            // editor: "text",
-            // editValue: "name",
-            editaction: "dblclick",
-            // url: {
-            //     $proxy: true,
-            //     load: Sticker.LoadFromStorage,
-            // },
-            // save: {
-            //     // $proxy: true,
-            //     save: (view, update) => {
-            //         console.log("operation: " + update.operation);
-            //         switch (update.operation) {
-            //             case "update":
-            //                 return Sticker.Update(update.data);
-            //         }
-            //     }
-            // },
-            // onClick: {
-            //     delete_icon: async (e, id) => {
-            //         await this.RemoveStikerFromGridDialog(this.$$(this.StickersGridId).getItem(id));
-            //         return false;
-            //     }
-            // }
+            on: {
+                onBeforeLoad: function () {
+                    this.showOverlay("Загрузка...");
+                },
+
+                onAfterLoad: function () {
+                    this.hideOverlay();
+                    if (!this.count())
+                        this.showOverlay("Данных нет");
+                    else
+                        this.hideOverlay();
+                },
+            }
         };
         return {
             localId: this.StickersConfigId,
@@ -100,18 +105,52 @@ export default class StickersConfig extends JetView {
         }
     }
 
-    async RemoveStikerFromGridDialog(selectedItem) {
+    async LoadStickers(){
+        let table = this.$$(this.StickersGridId);
+        table.parse(Sticker.LoadFromStorage());
+    }
+
+    async UpdateStickerInGridDialog(id){
+        try{
+            let table = this.$$(this.StickersGridId);
+            let itemToUpdate = table.getItem(id);
+            let result = await webix.prompt({
+                text: "Стикер",
+                ok: "Да",
+                cancel: "Нет",
+                input: {
+                    required: true,
+                    placeholder: "Введите название",
+                    value: itemToUpdate.name
+                }
+            });
+            if (result) {
+                itemToUpdate.name = result;
+                let updateItem = await Sticker.Update(itemToUpdate);
+                if (updateItem) {
+                    table.updateItem(itemToUpdate.id, itemToUpdate);
+                }
+            }
+        }
+        catch{
+            // supress error
+        }
+    }
+
+    async RemoveStikerFromGridDialog(id) {
         try {
+            let table = this.$$(this.StickersGridId);
+            let itemToRemove = table.getItem(id);
             let result = await this.webix.confirm({
-                text: "Удалить стикер \"" + selectedItem.name + "\" ?",
-                type: "confirm-warning",
+                text: "Удалить стикер \"" + itemToRemove.name + "\" ?",
+                type: "confirm-error",
                 ok: "Да",
                 cancel: "Нет"
             });
-            if (result != undefined) {
-                let deletedItem = await Sticker.Delete(selectedItem.id);
+            if (result) {
+                let deletedItem = await Sticker.Delete(itemToRemove.id);
                 if (deletedItem) {
-                    this.$$(this.StickersGridId).remove(selectedItem.id);
+                    table.remove(itemToRemove.id);
                 }
             }
         }

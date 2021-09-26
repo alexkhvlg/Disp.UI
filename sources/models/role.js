@@ -3,11 +3,11 @@
 import { my_fetch, response_ok } from "../Tools";
 import { DictNames, SaveDict, GetDict } from "./dictionaries";
 
-export class Sticker {
+export class Role {
 
     static LoadFromStorage() {
-        console.log("Load Sticker from storage");
-        return JSON.parse(GetDict(DictNames.Stickers));
+        console.log("Load Role from storage");
+        return JSON.parse(GetDict(DictNames.Roles));
     }
 
     static CreateInstance() {
@@ -19,28 +19,28 @@ export class Sticker {
     }
 
     static async Insert(item) {
-        console.log("Insert Sticker to server ");
+        console.log("Insert role to server ");
         let list = this.LoadFromStorage();
-        let response = await my_fetch("POST", "/api/v1/stickers", item);
+        let response = await my_fetch("POST", "/api/v1/roles", item);
         if (!await response_ok(response)) {
             let newItem = await response.json();
             list.push(newItem);
-            SaveDict(DictNames.Stickers, list);
+            SaveDict(DictNames.Roles, list);
             return newItem;
         }
         return undefined;
     }
 
     static async Update(item) {
-        console.log("Update Sticker on server");
+        console.log("Update role on server");
         let list = this.LoadFromStorage();
         let foundedIndex = list.findIndex(e => e.id == item.id);
         if (foundedIndex >= 0) {
-            let response = await my_fetch("PUT", "/api/v1/stickers/" + item.id, item);
+            let response = await my_fetch("PUT", "/api/v1/roles/" + item.id, item);
             if (!await response_ok(response)) {
                 let updateItem = await response.json();
                 list[foundedIndex] = updateItem;
-                SaveDict(DictNames.Stickers, list);
+                SaveDict(DictNames.Roles, list);
                 return updateItem;
             }
         }
@@ -48,13 +48,13 @@ export class Sticker {
     }
 
     static async Delete(id) {
-        console.log("Delete Sticker from server");
+        console.log("Delete role from server");
         let list = this.LoadFromStorage();
         let foundedIndex = list.findIndex(e => e.id == id);
         if (foundedIndex >= 0) {
-            await my_fetch("DELETE", "/api/v1/stickers/" + id);
+            await my_fetch("DELETE", "/api/v1/roles/" + id);
             list.splice(foundedIndex, 1);
-            SaveDict(DictNames.Stickers, list);
+            SaveDict(DictNames.Roles, list);
             return foundedIndex;
         }
         return undefined;

@@ -1,6 +1,6 @@
 .webix_view {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #475466;
     letter-spacing: 0.2px;
@@ -112,7 +112,7 @@
     color: #444;
     font-size: 10px;
     text-transform: uppercase;
-    line-height: 44px;
+    line-height: 36px;
   }
   .webix_section:before {
     content: '';
@@ -145,15 +145,15 @@
   }
   .webix_header {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
-    line-height: 42px;
+    line-height: 34px;
   }
   .webix_header .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -312,7 +312,11 @@
   .webix_header.webix_dark .webix_selected.webix_segment_N:active {
     background-color: #17839d;
   }
+  .webix_header.webix_dark .webix_img_btn_top .webix_img_btn_text,
+  .webix_header.webix_dark .webix_img_btn_top .webix_icon,
   .webix_header.webix_dark .webix_el_icon,
+  .webix_header.webix_dark .webix_img_btn,
+  .webix_header.webix_dark .webix_icon_btn,
   .webix_header.webix_dark .webix_icon_button {
     color: #FFFFFF;
   }
@@ -328,6 +332,10 @@
   .webix_header.webix_dark .webix_icon_button .webix_icon {
     color: #FFFFFF;
     opacity: 0.7;
+  }
+  .webix_header.webix_dark .webix_img_btn,
+  .webix_header.webix_dark .webix_img_btn_top {
+    border-width: 0;
   }
   .webix_header.webix_dark .webix_custom_checkbox,
   .webix_header.webix_dark .webix_custom_radio {
@@ -412,7 +420,7 @@
     color: #FFFFFF;
   }
   .webix_header > div {
-    line-height: 44px;
+    line-height: 36px;
     padding-left: 10px;
     padding-top: 0;
     padding-bottom: 0;
@@ -547,11 +555,11 @@
     position: relative;
     z-index: 2;
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
-    line-height: 42px;
+    line-height: 34px;
     cursor: pointer;
     overflow: hidden;
   }
@@ -560,7 +568,7 @@
   }
   .webix_accordionitem_header .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -719,7 +727,11 @@
   .webix_accordionitem_header.webix_dark .webix_selected.webix_segment_N:active {
     background-color: #17839d;
   }
+  .webix_accordionitem_header.webix_dark .webix_img_btn_top .webix_img_btn_text,
+  .webix_accordionitem_header.webix_dark .webix_img_btn_top .webix_icon,
   .webix_accordionitem_header.webix_dark .webix_el_icon,
+  .webix_accordionitem_header.webix_dark .webix_img_btn,
+  .webix_accordionitem_header.webix_dark .webix_icon_btn,
   .webix_accordionitem_header.webix_dark .webix_icon_button {
     color: #FFFFFF;
   }
@@ -735,6 +747,10 @@
   .webix_accordionitem_header.webix_dark .webix_icon_button .webix_icon {
     color: #FFFFFF;
     opacity: 0.7;
+  }
+  .webix_accordionitem_header.webix_dark .webix_img_btn,
+  .webix_accordionitem_header.webix_dark .webix_img_btn_top {
+    border-width: 0;
   }
   .webix_accordionitem_header.webix_dark .webix_custom_checkbox,
   .webix_accordionitem_header.webix_dark .webix_custom_radio {
@@ -835,7 +851,7 @@
     position: relative;
     height: 11px;
     width: 11px;
-    margin: 14.5px 13px;
+    margin: 10.5px 9px;
   }
   /*
   .webix_accordionitem.vertical > .webix_accordionitem_header .webix_accordionitem_button{
@@ -1018,7 +1034,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 2px 12px;
-    line-height: 31px;
+    line-height: 23px;
     cursor: pointer;
     border-bottom: 1px solid #EDEFF0;
     text-align: left;
@@ -1050,10 +1066,10 @@
     position: relative;
     background: #F4F5F9;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
   }
   .webix_arrow_icon {
     position: absolute;
@@ -1094,7 +1110,7 @@
   }
   .webix_unit_header {
     padding: 0 12px;
-    line-height: 35px;
+    line-height: 27px;
     text-align: left;
     background-color: #F4F5F9;
   }
@@ -1222,7 +1238,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 2px 12px;
-    line-height: 31px;
+    line-height: 23px;
     cursor: pointer;
     border-bottom: 1px solid #EDEFF0;
     text-align: left;
@@ -1419,13 +1435,13 @@
     border: 1px solid #ffd700;
     height: 100%;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #475466;
     letter-spacing: 0.2px;
   }
   .webix_dt_editor input[type="checkbox"] {
-    margin: 11px 13px 0px;
+    margin: 7px 13px 0px;
     height: auto;
     width: auto;
   }
@@ -1454,7 +1470,7 @@
   }
   .webix_cell {
     overflow: hidden;
-    line-height: 33px;
+    line-height: 25px;
     white-space: nowrap;
   }
   .webix_hcell {
@@ -1537,7 +1553,7 @@
     box-sizing: border-box;
   }
   .webix_table_cell {
-    font-size: 14px;
+    font-size: 12px;
   }
   .webix_block_selection {
     position: absolute;
@@ -1630,12 +1646,12 @@
     width: 100%;
     font-size: inherit;
     color: #475466 !important;
-    height: 38px;
+    height: 30px;
     margin-top: -2px;
     padding: 0 3px;
     vertical-align: top;
     border: 1px solid #DADEE0;
-    line-height: 32px;
+    line-height: 24px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1643,7 +1659,7 @@
   }
   .webix_richfilter {
     margin-top: 1px;
-    line-height: 32px;
+    line-height: 24px;
   }
   .webix_ss_filter select {
     padding: 3px;
@@ -1657,10 +1673,10 @@
   .webix_hs_center,
   .webix_hs_right {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
     background: #F4F5F9;
   }
   .webix_ss_footer,
@@ -1676,10 +1692,10 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
   }
   /*content in header and footer*/
   .webix_hcell {
@@ -1743,7 +1759,7 @@
     white-space: nowrap;
     overflow: hidden;
     border-left: 1px solid #EDEFF0;
-    height: 36px;
+    height: 28px;
   }
   .webix_dd_drag > div {
     display: inline-block;
@@ -1753,8 +1769,8 @@
     border-right: 1px solid #EDEFF0;
     border-bottom: 1px solid #EDEFF0;
     padding: 5px 12px;
-    height: 36px;
-    line-height: 28px;
+    height: 28px;
+    line-height: 20px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -2443,7 +2459,7 @@
     border-radius: 2px;
     border: 1px solid #DADEE0;
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0px;
     outline: none;
@@ -2466,7 +2482,7 @@
   .webix_property_line {
     clear: both;
     width: 100%;
-    min-height: 28px;
+    min-height: 24px;
     height: auto;
   }
   .webix_property_line.webix_focused > div,
@@ -2475,8 +2491,8 @@
   }
   .webix_property_label,
   .webix_property_value {
-    height: 28px;
-    line-height: 27px;
+    height: 24px;
+    line-height: 23px;
     padding-left: 12px;
     float: left;
     border-bottom: 1px solid #EDEFF0;
@@ -2490,18 +2506,18 @@
   }
   .webix_property_label_line {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
-    line-height: 42px;
+    line-height: 34px;
     padding-left: 12px;
     border-bottom: 1px solid #EDEFF0;
-    line-height: 28px;
+    line-height: 24px;
   }
   .webix_property_label_line .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -2660,7 +2676,11 @@
   .webix_property_label_line.webix_dark .webix_selected.webix_segment_N:active {
     background-color: #17839d;
   }
+  .webix_property_label_line.webix_dark .webix_img_btn_top .webix_img_btn_text,
+  .webix_property_label_line.webix_dark .webix_img_btn_top .webix_icon,
   .webix_property_label_line.webix_dark .webix_el_icon,
+  .webix_property_label_line.webix_dark .webix_img_btn,
+  .webix_property_label_line.webix_dark .webix_icon_btn,
   .webix_property_label_line.webix_dark .webix_icon_button {
     color: #FFFFFF;
   }
@@ -2676,6 +2696,10 @@
   .webix_property_label_line.webix_dark .webix_icon_button .webix_icon {
     color: #FFFFFF;
     opacity: 0.7;
+  }
+  .webix_property_label_line.webix_dark .webix_img_btn,
+  .webix_property_label_line.webix_dark .webix_img_btn_top {
+    border-width: 0;
   }
   .webix_property_label_line.webix_dark .webix_custom_checkbox,
   .webix_property_label_line.webix_dark .webix_custom_radio {
@@ -2775,7 +2799,7 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    margin: 4px 8px 0 0;
+    margin: 2px 8px 0 0;
   }
   .webix_property_value {
     text-overflow: ellipsis;
@@ -2794,7 +2818,7 @@
     padding: 5px 10px;
     border: 1px solid #DADEE0;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #475466;
     letter-spacing: 0.2px;
@@ -3009,8 +3033,8 @@
     padding: 4px 12px 12px;
   }
   .webix_popup_button {
-    height: 30px;
-    line-height: 30px;
+    height: 22px;
+    line-height: 22px;
     display: inline-block;
     margin: 0 4px;
     border-radius: 2px;
@@ -3039,9 +3063,9 @@
   }
   /*Skin section*/
   .webix_popup_button {
-    font-size: 14px;
+    font-size: 12px;
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0px;
     background: #F4F5F9;
@@ -3059,7 +3083,7 @@
   }
   .webix_popup_button.confirm {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #1CA1C1;
     letter-spacing: 0px;
@@ -3084,8 +3108,8 @@
   .webix_popup_input.webix_el_text input {
     box-sizing: border-box;
     width: 100%;
-    height: 30px;
-    font-size: 14px;
+    height: 22px;
+    font-size: 12px;
     background: #ffffff;
     font-family: Roboto, sans-serif;
     border-color: #CCD7E6;
@@ -3109,7 +3133,7 @@
     color: #475466;
     line-height: 20px;
     padding: 20px 16px 12px 16px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
   }
   .webix_popup_title + div.webix_popup_text {
@@ -3119,9 +3143,9 @@
   .webix_popup_text {
     overflow: hidden;
     padding: 24px 16px 0px 16px;
-    font-size: 14px;
+    font-size: 12px;
     color: #475466;
-    line-height: 20px;
+    line-height: 18px;
   }
   .webix_popup_text.webix_popup_label {
     text-align: left;
@@ -3154,10 +3178,10 @@
     box-shadow: inset 0 4px #FF5C4C;
   }
   .webix_message {
-    font-size: 14px;
+    font-size: 12px;
     color: #475466;
     box-shadow: 0 1px 14px 0 rgba(0, 0, 0, 0.12), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
-    line-height: 20px;
+    line-height: 18px;
     border-radius: 2px;
     border: 1px solid #DADEE0;
     background-color: #FFFFFF;
@@ -3178,7 +3202,7 @@
     background-color: #ddf5ea;
   }
   .webix_message div {
-    padding: 11px 12px;
+    padding: 8px 12px;
   }
   .webix_color_row {
     clear: both;
@@ -3318,7 +3342,7 @@
   }
   .webix_color_out_block,
   .webix_color_out_text {
-    height: 32px;
+    height: 24px;
     float: left;
     border: 1px solid #CCD7E6;
     margin: 12px 0px 12px 12px;
@@ -3326,7 +3350,7 @@
   }
   .webix_color_out_text {
     color: #475466;
-    font-size: 14px;
+    font-size: 12px;
     background: #ffffff;
     font-family: Roboto, sans-serif;
     border-color: #CCD7E6;
@@ -3339,7 +3363,7 @@
   }
   .webix_color_area .webix_button {
     width: calc(100% - 12px*2);
-    height: 32px;
+    height: 24px;
     margin: 0px 0px 12px 12px;
     box-sizing: border-box;
   }
@@ -3443,7 +3467,7 @@
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
     background-color: #FFFFFF;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #475466;
     letter-spacing: 0.2px;
@@ -3502,7 +3526,7 @@
   }
   .webix_drop_area,
   .webix_drop_area_inner {
-    height: 36px;
+    height: 28px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -3732,7 +3756,7 @@
     width: 100%;
     cursor: pointer;
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #1CA1C1;
     letter-spacing: 0px;
@@ -3835,7 +3859,7 @@
     padding-left: 0;
     padding-right: 9px;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
     letter-spacing: 0.2px;
@@ -3873,18 +3897,18 @@
     padding: 3px 2px;
     height: 100%;
     width: 100%;
-    font-size: 14px;
+    font-size: 12px;
     overflow: hidden;
   }
   .webixtoolbarlabel {
-    font-size: 16px;
+    font-size: 14px;
   }
   .webix_el_text input,
   .webix_el_search input,
   .webix_el_combo input,
   .webix_el_datepicker input,
   .webix_el_colorpicker input {
-    font-size: 14px;
+    font-size: 12px;
     height: 100%;
     padding: 0px 12px;
     border: 1px solid #DADEE0;
@@ -3908,7 +3932,7 @@
   .webix_label_right {
     color: #475466;
     text-transform: none;
-    font-size: 14px;
+    font-size: 12px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -3928,7 +3952,7 @@
     padding-bottom: 0px;
   }
   .webix_inp_bottom_label {
-    font-size: 12px;
+    font-size: 10px;
     color: #516075;
   }
   .webix_label_right {
@@ -3946,7 +3970,7 @@
   }
   .webix_el_select select {
     height: 100%;
-    font-size: 14px;
+    font-size: 12px;
     font-family: Roboto, sans-serif;
     border: 1px solid #DADEE0;
   }
@@ -3969,7 +3993,7 @@
     vertical-align: top;
   }
   .webix_inp_counter_value {
-    font-size: 14px;
+    font-size: 12px;
     width: 50px;
     color: #475466;
     text-align: center;
@@ -4040,13 +4064,13 @@
     padding: 5px;
     color: #475466;
     resize: none;
-    font-size: 14px;
+    font-size: 12px;
     font-family: Roboto, sans-serif;
     padding-left: 12px;
     padding-right: 12px;
   }
   .webix_el_textarea .webix_inp_label {
-    padding-top: 10px;
+    padding-top: 7px;
   }
   .webix_segment_0,
   .webix_segment_1 {
@@ -4103,7 +4127,7 @@
   .webix_segment_N {
     -webkit-appearance: none;
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0px;
     outline: none;
@@ -4199,7 +4223,7 @@
   .webix_el_datepicker,
   .webix_el_colorpicker,
   .webix_el_search {
-    font-size: 14px;
+    font-size: 12px;
   }
   .webix_el_combo input,
   .webix_el_richselect input,
@@ -4260,7 +4284,7 @@
   }
   .webix_el_radio .webix_inp_label {
     line-height: normal !important;
-    padding-top: 7px;
+    padding-top: 4px;
   }
   .webix_inp_radio_border input,
   .webix_el_checkbox input {
@@ -4294,7 +4318,7 @@
   .webix_radio_option {
     display: table;
     float: left;
-    height: 32px;
+    height: 24px;
     margin-right: 20px;
   }
   .webix_inp_radio_border,
@@ -4314,13 +4338,13 @@
     border-color: #fea5a8;
   }
   .webix_invalid .webix_inp_bottom_label {
-    font-size: 12px;
+    font-size: 10px;
     color: #fd595f;
   }
   .webix_el_colorpicker .webix_input_icon {
     padding-left: 0;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     border-radius: 2px;
   }
   .webix_el_search .webix_el_box {
@@ -4331,7 +4355,7 @@
   }
   .webix_el_search span {
     position: absolute;
-    right: 19px;
+    right: 15px;
     cursor: pointer;
     padding-left: 7px;
   }
@@ -4393,7 +4417,7 @@
     border: 0;
     float: left;
     vertical-align: middle;
-    font-size: 14px;
+    font-size: 12px;
     padding: 0px;
     color: #475466;
     font-family: Roboto, sans-serif;
@@ -4703,7 +4727,7 @@
     border: none;
     text-decoration: none;
     background: #FFFFFF;
-    height: 36px;
+    height: 28px;
   }
   .webix_menu .webix_list_item .webix_submenu_icon,
   .webix_menu-x .webix_list_item .webix_submenu_icon {
@@ -4721,18 +4745,18 @@
     margin-left: 0px;
   }
   .webix_menu-x .webix_submenu_icon {
-    top: 14px;
+    top: 10px;
   }
   .webix_menu-x .webix_list_item {
     display: inline-block;
-    line-height: 32px;
+    line-height: 24px;
   }
   .webix_menu-x .webix_list_item {
     border-right: 1px solid #fff;
     border-left: 0px;
     background: #1CA1C1;
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
   }
   .webix_menu-x .webix_list_item .webix_submenu_icon:before {
     content: '\F001';
@@ -4807,10 +4831,10 @@
     border-top: 1px solid #DADEE0;
   }
   .webix_menu .webix_submenu_icon {
-    top: 12px;
+    top: 8px;
   }
   .webix_menu .webix_context_spacer {
-    height: 36px;
+    height: 28px;
   }
   .webix_menu_link {
     color: inherit;
@@ -4821,7 +4845,7 @@
   /* Toolbar */
   .webix_toolbar.webix_layout_subbar .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -4980,7 +5004,11 @@
   .webix_toolbar.webix_layout_subbar.webix_dark .webix_selected.webix_segment_N:active {
     background-color: #17839d;
   }
+  .webix_toolbar.webix_layout_subbar.webix_dark .webix_img_btn_top .webix_img_btn_text,
+  .webix_toolbar.webix_layout_subbar.webix_dark .webix_img_btn_top .webix_icon,
   .webix_toolbar.webix_layout_subbar.webix_dark .webix_el_icon,
+  .webix_toolbar.webix_layout_subbar.webix_dark .webix_img_btn,
+  .webix_toolbar.webix_layout_subbar.webix_dark .webix_icon_btn,
   .webix_toolbar.webix_layout_subbar.webix_dark .webix_icon_button {
     color: #FFFFFF;
   }
@@ -4996,6 +5024,10 @@
   .webix_toolbar.webix_layout_subbar.webix_dark .webix_icon_button .webix_icon {
     color: #FFFFFF;
     opacity: 0.7;
+  }
+  .webix_toolbar.webix_layout_subbar.webix_dark .webix_img_btn,
+  .webix_toolbar.webix_layout_subbar.webix_dark .webix_img_btn_top {
+    border-width: 0;
   }
   .webix_toolbar.webix_layout_subbar.webix_dark .webix_custom_checkbox,
   .webix_toolbar.webix_layout_subbar.webix_dark .webix_custom_radio {
@@ -5116,7 +5148,7 @@
     float: right;
   }
   .cancel_icon {
-    margin-top: 9px;
+    margin-top: 5px;
     width: 14px;
     height: 14px;
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAQAAAC1QeVaAAAAsElEQVR4XoVQUQbDQBScAywIuUcpKCWglBJCDlBKf0vpbymhd5mDhIDcoAcoJQSEsn2G5KmWzMDsPG92ZyGAgVfWfBtrUwEOZnwwOu2UjaPCbScLAEzYmzxyxafMgaUlRXMTsJJ1B7jgy0Y7gHt5FdgyimeAS+a6ZpDTQkLkCQbmk9OBHaPv+p6x99jLFFuOsTMPSlXl8FVlrSopFBP/sIQAbn6+bwsHA29sNGhMBQgf1cri4JYEbDkAAAAASUVORK5CYII=");
@@ -5162,7 +5194,7 @@
     color: #475466;
     font-family: Roboto, sans-serif;
     float: left;
-    line-height: 32px;
+    line-height: 24px;
     padding: 3px 2px;
     padding-right: 9px;
     -moz-box-sizing: border-box;
@@ -5177,13 +5209,14 @@
     position: relative;
     padding: 0px 10px;
     height: 100%;
+    padding-top: 11px;
     float: left;
     border-radius: 5px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin-top: -11px;
-    padding-top: 15px;
+    padding-top: 13px;
   }
   .webix_slider_box .webix_slider_left {
     height: 10px;
@@ -5234,7 +5267,7 @@
     position: absolute;
     width: 14px;
     height: 14px;
-    top: 12px;
+    top: 8px;
     border-radius: 8px;
   }
   .webix_slider_box .webix_slider_handle:focus {
@@ -5250,11 +5283,11 @@
     border-color: #CCD7E6;
   }
   .webix_slider_box .webix_slider_handle {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border: 1px solid #CCD7E6;
     background-color: #FFFFFF;
-    top: 10px;
+    top: 9px;
   }
   .webix_rangeslider .webix_slider_box .webix_slider_left {
     position: absolute;
@@ -5306,7 +5339,7 @@
     width: 11px;
     margin: 0 2px;
     height: 14px;
-    top: 12px;
+    top: 8px;
     border-radius: 2px;
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAICAYAAAAx8TU7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTJCMjdFNENBRTg4MTFFMjk2NjJGMTJENjkyNDA2NTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTJCMjdFNERBRTg4MTFFMjk2NjJGMTJENjkyNDA2NTkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MkIyN0U0QUFFODgxMUUyOTY2MkYxMkQ2OTI0MDY1OSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MkIyN0U0QkFFODgxMUUyOTY2MkYxMkQ2OTI0MDY1OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Powz/icAAAAaSURBVHjaYmBgYDBjgAA4zcSABQysIECAAQBn+ACx2PqtbAAAAABJRU5ErkJggg==");
     background-repeat: no-repeat;
@@ -5325,7 +5358,8 @@
   .webix_slider_alt .webix_slider_box .webix_slider_handle {
     background-color: #FFFFFF;
     border: 1px solid #CCD7E6;
-    top: 10px;
+    top: 9px;
+    height: 12px;
   }
   .webix_slider_vertical .webix_slider_box .webix_slider_left,
   .webix_slider_vertical .webix_slider_box .webix_slider_right {
@@ -5390,8 +5424,8 @@
     display: block;
     position: relative;
     top: 50%;
-    margin-top: -12px;
-    height: 24px;
+    margin-top: -11px;
+    height: 22px;
     cursor: pointer;
     background-color: #f1f1f1;
     border: 1px solid #DADEE0;
@@ -5408,8 +5442,8 @@
     margin-top: 4px;
   }
   .webix_switch_handle {
-    height: 22px;
-    width: 22px;
+    height: 20px;
+    width: 20px;
     border-radius: 100%;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
     border: 1px solid #eee;
@@ -5601,7 +5635,7 @@
     padding-top: 28px;
   }
   .webix_timeline_item {
-    height: 46px;
+    height: 36px;
     line-height: 0;
     box-sizing: border-box;
     padding: 0 12px;
@@ -5728,7 +5762,7 @@
     position: relative;
   }
   .webix_barcode .webix_canvas_text {
-    font-size: 14px;
+    font-size: 12px;
     padding: 0 2px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -5848,8 +5882,8 @@
   }
   .webix_sidebar .webix_tree_item {
     color: #454545;
-    height: 44px;
-    line-height: 43px;
+    height: 36px;
+    line-height: 35px;
   }
   .webix_sidebar .webix_scroll_cont > .webix_tree_leaves {
     padding: 0;
@@ -5870,8 +5904,8 @@
     padding-left: 44px;
   }
   .webix_sidebar .webix_tree_branch_1 > .webix_tree_item {
-    height: 44px;
-    line-height: 44px;
+    height: 36px;
+    line-height: 36px;
     padding-left: 0;
   }
   .webix_sidebar .webix_tree_branch_1 {
@@ -5920,7 +5954,7 @@
     background: #F4F5F9;
   }
   .webix_sidebar_popup_title .webix_template {
-    line-height: 44px;
+    line-height: 36px;
     padding: 0 10px;
     border: 1px solid #E5E5E5;
     border-left: none;
@@ -6034,7 +6068,7 @@
     border-radius: 2px;
     border: 1px solid #DADEE0;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-family: Roboto, sans-serif;
     background-color: #F4F5F9;
   }
@@ -6044,7 +6078,7 @@
     width: 26px;
   }
   .webix_dbllist .dbllist_button:first-child {
-    margin-top: 36px;
+    margin-top: 28px;
     margin-right: 4px;
   }
   .webix_dbllist .dbllist_button:last-child {
@@ -6179,10 +6213,10 @@
     .webix_table_print .webix_header_cell {
       display: table-cell;
       font-family: Roboto, sans-serif;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 500;
       color: #313131;
-      letter-spacing: 0.2px;
+      letter-spacing: 0;
       background: #F4F5F9;
       border-right: 1px solid #DADEE0;
       border-bottom: 1px solid #DADEE0;
@@ -6302,33 +6336,33 @@
   }
   @font-face {
     font-family: Roboto;
-    src: url('fonts/Roboto-Regular-webfont.woff2') format('woff2'), url('fonts/Roboto-Regular-webfont.woff') format('woff');
+    src: url('../fonts/Roboto-Regular-webfont.woff2') format('woff2'), url('../fonts/Roboto-Regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
   }
   @font-face {
     font-family: Roboto;
-    src: url('fonts/Roboto-Medium-webfont.woff2') format('woff2'), url('fonts/Roboto-Medium-webfont.woff') format('woff');
+    src: url('../fonts/Roboto-Medium-webfont.woff2') format('woff2'), url('../fonts/Roboto-Medium-webfont.woff') format('woff');
     font-style: normal;
     font-weight: 500;
   }
   .mainFont {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #475466;
     letter-spacing: 0.2px;
   }
   .buttonFont {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #1CA1C1;
     letter-spacing: 0px;
   }
   .barFont {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -6340,7 +6374,7 @@
   /*[L]*/
   .layoutBarBG .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -6499,7 +6533,11 @@
   .layoutBarBG.webix_dark .webix_selected.webix_segment_N:active {
     background-color: #17839d;
   }
+  .layoutBarBG.webix_dark .webix_img_btn_top .webix_img_btn_text,
+  .layoutBarBG.webix_dark .webix_img_btn_top .webix_icon,
   .layoutBarBG.webix_dark .webix_el_icon,
+  .layoutBarBG.webix_dark .webix_img_btn,
+  .layoutBarBG.webix_dark .webix_icon_btn,
   .layoutBarBG.webix_dark .webix_icon_button {
     color: #FFFFFF;
   }
@@ -6515,6 +6553,10 @@
   .layoutBarBG.webix_dark .webix_icon_button .webix_icon {
     color: #FFFFFF;
     opacity: 0.7;
+  }
+  .layoutBarBG.webix_dark .webix_img_btn,
+  .layoutBarBG.webix_dark .webix_img_btn_top {
+    border-width: 0;
   }
   .layoutBarBG.webix_dark .webix_custom_checkbox,
   .layoutBarBG.webix_dark .webix_custom_radio {
@@ -6597,7 +6639,7 @@
   }
   .webix_toolbar .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #475466;
     letter-spacing: 0px;
@@ -6756,7 +6798,11 @@
   .webix_toolbar.webix_dark .webix_selected.webix_segment_N:active {
     background-color: #17839d;
   }
+  .webix_toolbar.webix_dark .webix_img_btn_top .webix_img_btn_text,
+  .webix_toolbar.webix_dark .webix_img_btn_top .webix_icon,
   .webix_toolbar.webix_dark .webix_el_icon,
+  .webix_toolbar.webix_dark .webix_img_btn,
+  .webix_toolbar.webix_dark .webix_icon_btn,
   .webix_toolbar.webix_dark .webix_icon_button {
     color: #FFFFFF;
   }
@@ -6772,6 +6818,10 @@
   .webix_toolbar.webix_dark .webix_icon_button .webix_icon {
     color: #FFFFFF;
     opacity: 0.7;
+  }
+  .webix_toolbar.webix_dark .webix_img_btn,
+  .webix_toolbar.webix_dark .webix_img_btn_top {
+    border-width: 0;
   }
   .webix_toolbar.webix_dark .webix_custom_checkbox,
   .webix_toolbar.webix_dark .webix_custom_radio {
@@ -6863,10 +6913,10 @@
     position: relative;
     height: 19px;
     width: 19px;
-    margin: 13.5px 13px;
+    margin: 9.5px 9px;
   }
   .webix_accordionitem .webix_accordionitem_header {
-    line-height: 44px;
+    line-height: 36px;
   }
   .webix_accordionitem .webix_accordionitem_header:hover,
   .webix_accordionitem .webix_accordionitem_header:focus {
@@ -6875,7 +6925,7 @@
   .webix_accordionitem.collapsed .webix_accordionitem_button {
     float: right;
     position: relative;
-    margin-top: 12.5px;
+    margin-top: 8.5px;
   }
   .webix_accordionitem.horizontal.collapsed,
   .webix_accordionitem.collapsed {
@@ -6934,8 +6984,8 @@
     font-size: 24px;
     text-align: center;
     width: 24px;
-    height: 43px;
-    margin: 0 10px 0 10px;
+    height: 35px;
+    margin: 0 6px 0 6px;
   }
   .webix_accordionitem .webix_accordionitem_header .webix_accordionitem_label .webix_icon {
     color: #94A1B3;
@@ -6953,8 +7003,8 @@
     content: '\F001';
   }
   .webix_accordionitem.vertical > .webix_accordionitem_header .webix_accordionitem_button {
-    height: 43px;
-    margin: 0px 10px 0 10px;
+    height: 35px;
+    margin: 0px 6px 0 6px;
   }
   .webix_accordionitem.vertical > .webix_accordionitem_header .webix_accordionitem_button:before {
     content: '\F004';
@@ -7018,10 +7068,10 @@
   }
   .dataHeaderFont {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
   }
   .webix_dtable .webix_ss_header .webix_hcell,
   .webix_dtable .webix_ss_footer .webix_hcell {
@@ -7077,7 +7127,7 @@
   }
   .webix_dtable .webix_ss_filter select,
   .webix_dtable .webix_ss_filter input {
-    height: 32px;
+    height: 24px;
     vertical-align: middle;
     border-radius: 2px;
     border-color: #CCD7E6;
@@ -7104,10 +7154,10 @@
   .webix_dtable .webix_ss_footer .webix_hs_right,
   .webix_dtable .webix_ss_footer div.webix_ss_vscroll_footer {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
     background: #F4F5F9;
   }
   .webix_dtable .webix_column > .webix_drag_over.webix_cell {
@@ -7125,6 +7175,10 @@
   .webix_dtable_focused .webix_area_selection,
   .webix_dtable_focused .webix_area_selection_handle {
     background-color: #1992af;
+  }
+  .webix_ss_sort_asc,
+  .webix_ss_sort_desc {
+    font-size: 18px;
   }
   .dtBodyCell {
     border-bottom: 1px solid #EDEFF0;
@@ -7151,7 +7205,6 @@
   }
   .webix_dataview_item {
     border-right-color: #EDEFF0;
-    line-height: 24px;
   }
   .webix_dataview_item.webix_selected {
     box-shadow: none;
@@ -7161,7 +7214,7 @@
   }
   .webix_view .webix_pager_item {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0px;
     outline: none;
@@ -7177,9 +7230,12 @@
   .webix_view .webix_pager_item:active {
     background-color: #daddeb;
   }
+  .webix_view .webix_pager_item .webix_icon {
+    font-size: 15px;
+  }
   .webix_view .webix_pager_item_selected {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #1CA1C1;
     letter-spacing: 0px;
@@ -7210,14 +7266,18 @@
     box-sizing: border-box;
     background: #F4F5F9;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
   }
   .webix_list .webix_unit_header:not(:first-child) {
     border-top: 1px solid #DADEE0;
     margin-top: -1px;
+  }
+  .webix_arrow_icon {
+    margin-top: -11px;
+    font-size: 18px;
   }
   .webix_tree .webix_tree_item.webix_selected {
     background-color: #F4F5F9;
@@ -7357,6 +7417,10 @@
   .webix_focused .webix_inp_static {
     border: 1px solid #1CA1C1;
   }
+  .webix_multilist .wxi-checkbox-blank,
+  .webix_multilist .wxi-checkbox-marked {
+    font-size: 20px;
+  }
   .webix_multilist .wxi-checkbox-marked {
     color: #1CA1C1;
   }
@@ -7371,13 +7435,11 @@
     padding: 0 12px 0 12px;
   }
   .webix_multicombo_value {
-    padding: 0 26px 0 12px;
+    padding: 0 20px 0 12px;
   }
   .webix_multicombo_delete {
+    right: 2px;
     color: #94A1B3;
-    margin-top: -10px;
-    font-size: 20px;
-    height: 20px;
   }
   .webix_multicombo_delete::after {
     content: "\F033";
@@ -7391,7 +7453,7 @@
   }
   .webix_checksuggest_select_all .webix_label_right {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     color: #1CA1C1;
   }
   .webix_checksuggest_select_all.webix_el_checkbox .webix_label_right {
@@ -7399,7 +7461,7 @@
   }
   .buttonStyle {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #1CA1C1;
     letter-spacing: 0px;
@@ -7452,7 +7514,7 @@
   }
   .webix_all_tabs .webix_item_tab {
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #1CA1C1;
     letter-spacing: 0px;
@@ -7558,7 +7620,7 @@
   }
   .webix_el_tabbar .webixtype_iconTop .webix_item_tab,
   .webix_el_tabbar .webixtype_image .webix_item_tab {
-    font-size: 14px;
+    font-size: 12px;
     padding-top: 2px;
     padding-bottom: 2px;
   }
@@ -7571,7 +7633,7 @@
   .webix_el_tabbar .webixtype_iconTop .webix_img_btn_text,
   .webix_el_tabbar .webixtype_image .webix_img_btn_text {
     bottom: 0px;
-    font-size: 14px;
+    font-size: 12px;
   }
   .webix_el_tabbar .webixtype_iconTop .webix_item_tab.webix_selected,
   .webix_el_tabbar .webixtype_image .webix_item_tab.webix_selected {
@@ -7728,15 +7790,23 @@
     color: #1CA1C1;
     font-weight: 500;
   }
+  .webix_slider_vertical .webix_slider_box {
+    margin-top: -10px;
+  }
   .webix_slider_vertical .webix_slider_box .webix_slider_left,
   .webix_slider_vertical .webix_slider_box .webix_slider_right {
     width: 6px;
   }
   .webix_slider_vertical .webix_slider_box .webix_slider_handle {
-    left: 5px;
+    left: 6px;
   }
   .webix_slider_vertical.webix_slider_alt .webix_slider_handle {
     left: 3px;
+  }
+  .webix_rangeslider .webix_slider_title_box,
+  .webix_rangeslider .webix_slider_title {
+    height: 14px;
+    margin-top: 0px;
   }
   .webix_section > .webix_template {
     font-family: Roboto, sans-serif;
@@ -7772,7 +7842,7 @@
   .webix_custom_checkbox {
     float: left;
     position: relative;
-    font-size: 24px;
+    font-size: 20px;
     height: 100%;
     padding: 0;
     margin-top: 1px;
@@ -7785,7 +7855,7 @@
   }
   .webix_el_radio .webix_custom_radio:before {
     font-family: "Webix Material Icons";
-    font-size: 24px;
+    font-size: 20px;
     content: "\F035";
     display: block;
   }
@@ -7810,17 +7880,14 @@
   .webix_cal_time,
   .webix_cal_month_name {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #475466;
     letter-spacing: 0.2px;
   }
   .webix_cal_icon:hover,
   .webix_cal_time:hover,
-  .webix_cal_month_name:hover,
-  .webix_cal_icon:focus,
-  .webix_cal_time:focus,
-  .webix_cal_month_name:focus {
+  .webix_cal_month_name:hover {
     text-decoration: none;
     color: #1CA1C1;
   }
@@ -7828,7 +7895,7 @@
   .webix_time_header .webix_cal_hours,
   .webix_time_header .webix_cal_minutes {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
     letter-spacing: 0.2px;
@@ -8075,6 +8142,8 @@
   }
   .webix_sidebar .webix_tree_item,
   .webix_sidebar .webix_tree_branch_1 > .webix_tree_item {
+    height: 36px;
+    line-height: 36px;
     color: #475466;
     cursor: pointer;
   }
@@ -8117,8 +8186,8 @@
     font-weight: 500;
   }
   .webix_sidebar_popup_list .webix_tree_branch_1 > .webix_tree_item {
-    height: 44px;
-    line-height: 44px;
+    height: 36px;
+    line-height: 36px;
   }
   .webix_sidebar_popup_left .webix_list_item.webix_selected,
   .webix_sidebar_popup_left .webix_list_item.webix_sidebar_selected {
@@ -8143,7 +8212,7 @@
   }
   .webix_sidebar_popup .webix_sidebar_popup_title .webix_template {
     border: none;
-    line-height: 44px;
+    line-height: 36px;
   }
   .webix_sidebar_popup .webix_sidebar_popup_title.webix_selected {
     color: #1CA1C1;
@@ -8153,7 +8222,7 @@
     box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1), 0 1px 7px 0 rgba(0, 0, 0, 0.1);
   }
   .webix_sidebar.webix_dark {
-    border-color: #4A4E58;
+    border-color: #373a42;
     background-color: #4A4E58;
   }
   .webix_sidebar.webix_dark .webix_tree_item {
@@ -8185,7 +8254,7 @@
   }
   .webix_sidebar_popup_list.webix_dark {
     background-color: #4A4E58;
-    border-color: #373a42;
+    border-color: #4A4E58;
   }
   .webix_sidebar_popup_list.webix_dark .webix_list_item {
     background: #4A4E58;
@@ -8308,7 +8377,7 @@
   legend.webix_forminput_label,
   .webix_el_label .webix_el_box {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #313131;
     letter-spacing: 0.2px;
@@ -8323,12 +8392,22 @@
   .webix_el_checkbox .webix_label_right {
     display: block;
   }
+  .webix_inp_bottom_label {
+    font-size: 12px;
+  }
   .webix_richtext .webix_richtext_container {
     box-shadow: inset 0 1px #DADEE0;
   }
+  .webix_richtext .wxi-underline,
+  .webix_richtext .wxi-italic,
+  .webix_richtext .wxi-bold {
+    vertical-align: sub;
+    font-size: 20px;
+    width: 20px;
+  }
   .webix_dbllist .bottom_label {
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #94A1B3;
     letter-spacing: 0.2px;
@@ -8370,8 +8449,7 @@
     background-color: #474747;
   }
   .webix_toolbar.pdf_bar .webix_icon_btn {
-    font-size: 20px;
-    vertical-align: middle;
+    font-size: 16px;
   }
   .webix_toolbar.pdf_bar .webix_img_btn:focus,
   .webix_toolbar.pdf_bar .webix_img_btn:hover {
@@ -8401,6 +8479,7 @@
   }
   .webix_invalid .webix_inp_bottom_label {
     color: #FF5C4C;
+    font-size: 12px;
   }
   .webix_nav_panel .webix_nav_item {
     background-color: transparent;
@@ -8496,13 +8575,25 @@
   .webix_dark .webix_nav_button_side.webix_nav_button_next .webix_nav_button_inner:focus {
     background: rgba(255, 255, 255, 0.4);
   }
+  .webix_comments_menu.webix_icon {
+    line-height: normal;
+  }
+  .webix_comments_more {
+    padding-top: 2px;
+  }
+  .webix_timeline_point {
+    r: 4;
+  }
+  .webix_timeboard .webix_colon_template .webix_template {
+    font-size: 27px;
+  }
   .webix_skin_mark {
-    height: 240px;
+    height: 250px;
   }
   /* based on MaterialDesignIcons.com */
   @font-face {
     font-family: "Webix Material Icons";
-    src: url('fonts/webixmdi-webfont.woff2') format('woff2'), url('fonts/webixmdi-webfont.woff') format('woff');
+    src: url('../fonts/webixmdi-webfont.woff2') format('woff2'), url('../fonts/webixmdi-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
   }

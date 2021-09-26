@@ -1,89 +1,64 @@
 "use strict";
 
-import { my_fetch } from "../Tools";
+import { my_fetch, response_ok } from "../Tools";
+
+const DictNames = {
+    ClosingDescriptions: "ClosingDescriptions",
+    ClosingResults: "ClosingResults",
+    ClusterCompanies: "ClusterCompanies",
+    Companies: "Companies",
+    GroupWorkTypes: "GroupWorkTypes",
+    Members: "Members",
+    Persons: "Persons",
+    Positions: "Positions",
+    Priorities: "Priorities",
+    Roles: "Roles",
+    Rules: "Rules",
+    ServiceAttributes: "ServiceAttributes",
+    ServiceObjects: "ServiceObjects",
+    ServiceObjectTypes: "ServiceObjectTypes",
+    Stages: "Stages",
+    Stickers: "Stickers",
+    TaskTypes: "TaskTypes",
+    WorkTypes: "WorkTypes"
+};
+
+let DictUrls = {};
+DictUrls[DictNames.ClosingDescriptions] = "/api/v1/closingdescriptions";
+DictUrls[DictNames.ClosingResults] = "/api/v1/closingresults";
+DictUrls[DictNames.ClusterCompanies] = "/api/v1/clustercompanies";
+DictUrls[DictNames.Companies] = "/api/v1/companies";
+DictUrls[DictNames.GroupWorkTypes] = "/api/v1/groupworktypes";
+DictUrls[DictNames.Members] = "/api/v1/members";
+DictUrls[DictNames.Persons] = "/api/v1/person";
+DictUrls[DictNames.Positions] = "/api/v1/positions";
+DictUrls[DictNames.Priorities] = "/api/v1/priorities";
+DictUrls[DictNames.Roles] = "/api/v1/roles";
+DictUrls[DictNames.Rules] = "/api/v1/rules";
+DictUrls[DictNames.ServiceAttributes] = "/api/v1/serviceattributes";
+DictUrls[DictNames.ServiceObjects] = "/api/v1/serviceobjects";
+DictUrls[DictNames.ServiceObjectTypes] = "/api/v1/serviceobjecttypes";
+DictUrls[DictNames.Stages] = "/api/v1/stages";
+DictUrls[DictNames.Stickers] = "/api/v1/stickers";
+DictUrls[DictNames.TaskTypes] = "/api/v1/tasktypes";
+DictUrls[DictNames.WorkTypes] = "/api/v1/worktypes";
 
 async function LoadDictionary(name) {
-    let result = "";
-    switch (name) {
-        case "ClosingDescriptions":
-            result = await my_fetch("GET", "/api/v1/closingdescriptions");
-            break;
-        case "ClosingResults":
-            result = await my_fetch("GET", "/api/v1/closingresults");
-            break;
-        case "ClusterCompanies":
-            result = await my_fetch("GET", "/api/v1/clustercompanies");
-            break;
-        case "Companies":
-            result = await my_fetch("GET", "/api/v1/companies");
-            break;
-        case "GroupWorkTypes":
-            result = await my_fetch("GET", "/api/v1/groupworktypes");
-            break;
-        case "Members":
-            result = await my_fetch("GET", "/api/v1/members");
-            break;
-        case "Person":
-            result = await my_fetch("GET", "/api/v1/person");
-            break;
-        case "Positions":
-            result = await my_fetch("GET", "/api/v1/positions");
-            break;
-        case "Priorities":
-            result = await my_fetch("GET", "/api/v1/priorities");
-            break;
-        case "Roles":
-            result = await my_fetch("GET", "/api/v1/roles");
-            break;
-        case "Rules":
-            result = await my_fetch("GET", "/api/v1/rules");
-            break;
-        case "ServiceAttributes":
-            result = await my_fetch("GET", "/api/v1/serviceattributes");
-            break;
-        case "ServiceObjects":
-            result = await my_fetch("GET", "/api/v1/serviceobjects");
-            break;
-        case "ServiceObjectTypes":
-            result = await my_fetch("GET", "/api/v1/serviceobjecttypes");
-            break;
-        case "Stages":
-            result = await my_fetch("GET", "/api/v1/stages");
-            break;
-        case "Stickers":
-            result = await my_fetch("GET", "/api/v1/stickers");
-            break;
-        case "Tasks":
-            result = await my_fetch("GET", "/api/v1/tasks");
-            break;
-        case "TaskTypes":
-            result = await my_fetch("GET", "/api/v1/tasktypes");
-            break;
-        case "WorkTypes":
-            result = await my_fetch("GET", "/api/v1/worktypes");
-            break;
+    let response = await my_fetch("GET", DictUrls[name]);
+    if (!await response_ok(response)) {
+        let json = await response.json();
+        let result = JSON.stringify(json);
+        localStorage.setItem(name, result);
     }
-    localStorage.setItem(name, JSON.stringify(result));
-    return result;
 }
 
 async function LoadDictionaries() {
-    await LoadDictionary("ClusterCompanies");
-    await LoadDictionary("Companies");
-    await LoadDictionary("GroupWorkTypes");
-    await LoadDictionary("Members");
-    await LoadDictionary("Person");
-    await LoadDictionary("Positions");
-    await LoadDictionary("Priorities");
-    await LoadDictionary("Roles");
-    await LoadDictionary("Rules");
-    await LoadDictionary("ServiceAttributes");
-    await LoadDictionary("ServiceObjects");
-    await LoadDictionary("ServiceObjectTypes");
-    await LoadDictionary("Stages");
-    await LoadDictionary("Stickers");
-    await LoadDictionary("TaskTypes");
-    await LoadDictionary("WorkTypes");
+    console.log("LoadDictionaries");
+    for (const key in DictNames) {
+        const name = DictNames[key];
+        await LoadDictionary(name);
+    }
+    console.log("ok");
 }
 
 function ClearDictionary(name) {
@@ -91,22 +66,22 @@ function ClearDictionary(name) {
 }
 
 function ClearDictionaries() {
-    ClearDictionary("ClusterCompanies");
-    ClearDictionary("Companies");
-    ClearDictionary("GroupWorkTypes");
-    ClearDictionary("Members");
-    ClearDictionary("Person");
-    ClearDictionary("Positions");
-    ClearDictionary("Priorities");
-    ClearDictionary("Roles");
-    ClearDictionary("Rules");
-    ClearDictionary("ServiceAttributes");
-    ClearDictionary("ServiceObjects");
-    ClearDictionary("ServiceObjectTypes");
-    ClearDictionary("Stages");
-    ClearDictionary("Stickers");
-    ClearDictionary("TaskTypes");
-    ClearDictionary("WorkTypes");
+    for (const key in DictNames) {
+        if (Object.hasOwnProperty.call(DictNames, key)) {
+            const name = DictNames[key];
+            ClearDictionary(name);
+        }
+    }
 }
 
-export { LoadDictionaries, ClearDictionaries };
+function SaveDict(name, list) {
+    localStorage.removeItem(name);
+    localStorage.setItem(name, JSON.stringify(list));
+}
+
+function GetDict(name) {
+    console.log("GetDict: " + name);
+    return localStorage.getItem(name);
+}
+
+export { LoadDictionaries, ClearDictionaries, DictNames, SaveDict, GetDict, DictUrls };

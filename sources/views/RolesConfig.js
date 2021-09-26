@@ -1,82 +1,87 @@
 "use restrict";
 
 import { JetView } from "webix-jet";
-import { my_fetch } from "../Tools";
+import { Role } from "../models/role";
+import { Rule } from "../models/rule";
+import { RoleRule } from "../models/rolerule";
 
 export default class Roles extends JetView {
-    RolesToCreate = []; // roles list to create
-    RolesToDelete = []; // roles list to delete
-    RolesConfig = undefined; // this control
-    RolesList = undefined; // roles list control
-    RulesTable = undefined; // rules table control
-    roles = undefined; // role objects list
-    rules = undefined; // rule objects list
+
+    RolesConfigId = "RolesConfig";
+    RolesGridId = "RolesGrid";
+    RulesGridId = "RulesGrid";
 
     ready() {
-        this.RolesConfig = webix.$$("RolesConfig");
-        this.RolesList = webix.$$("RolesList");
-        this.RulesTable = webix.$$("RulesTable");
-
-        this.rules = JSON.parse(localStorage.getItem("Rules"));
-
-        // Fill role list control
-        this.roles = JSON.parse(localStorage.getItem("Roles"));
-        this.RolesList.parse(this.roles);
-        // Select first role
-        this.RolesList.select(this.RolesList.getFirstId());
+        this.LoadRoles();
+        this.rules = Rule.LoadFromStorage();
     }
-    
+
     config() {
 
-        const rolesListLabelUi = {
-            view: "label",
-            label: "Роли",
-        };
-
-        const rolesListUi = {
-            id: "RolesList",
-            name: "RolesList",
-            view: "list",
-            template: "#name#",
-            select: true,
-            // autowidth: true,
-            css: "role_list",
-            on: {
-                onSelectChange: async () => {
-                    let role = this.RolesList.getSelectedItem();
-                    await this.ShowRules(role);
-                }
-            }
-        };
-
-        const createDeleteToolbarUi = {
+        const roleSGridLabelUi = {
             cols: [
+                {
+                    view: "label",
+                    label: "Роли",
+                },
                 {
                     view: "button",
                     value: "Создать",
                     autowidth: true,
                     css: "webix_primary",
-                    click: () => this.CreateRole()
-                },
-                {},
-                {
-                    view: "button",
-                    value: "Удалить",
-                    autowidth: true,
-                    css: "webix_primary",
-                    click: () => this.DeleteRole()
+                    click: async () => await this.AddRoleToGridDialog()
                 },
             ]
         };
 
-        const rulesTableLabelUi = {
+        const rolesGridUi = {
+            id: this.RolesGridId,
+            localId: this.RolesGridId,
+            view: "datatable",
+            columns: [
+                // { id: "id", header: "header" },
+                { id: "name", header: "Название", editor: "text", fillspace: true, sort: "string" },
+                { template: "{common.editIcon()}", width: 40 },
+                { template: "{common.trashIcon()}", width: 40 },
+            ],
+            resizeColumn: true,
+            select: true,
+            onClick: {
+                "wxi-trash": async (event, id) => {
+                    await this.RemoveRoleFromGridDialog(id);
+                },
+                "wxi-pencil": async (event, id) => {
+                    await this.UpdateRoleInGridDialog(id);
+                }
+            },
+            on: {
+                onSelectChange: async () => {
+                    await this.ShowRules();
+                },
+
+                onBeforeLoad: function () {
+                    this.showOverlay("Загрузка...");
+                },
+
+                onAfterLoad: function () {
+                    this.hideOverlay();
+                    if (!this.count())
+                        this.showOverlay("Данных нет");
+                    else
+                        this.hideOverlay();
+                },
+            }
+        };
+
+
+        const rulesGridLabelUi = {
             view: "label",
             label: "Права",
         };
 
-        const rulesTableUi = {
-            id: "RulesTable",
-            name: "RulesTable",
+        const rulesGridUi = {
+            id: this.RulesGridId,
+            localId: this.RulesGridId,
             view: "datatable",
             editable: true,
             checkboxRefresh: true,
@@ -91,47 +96,34 @@ export default class Roles extends JetView {
             },
             columns: [
                 {
-                    id: "Code", header: "Код", 
+                    id: "Code", header: "Код",
                     adjust: true
                 },
                 {
-                    id: "Name", header: "Название", 
+                    id: "Name", header: "Название",
                     fillspace: true
                 },
                 {
-                    id: "Create", header: "Создать", 
-                    checkValue: true, uncheckValue: false, 
+                    id: "Create", header: "Создать",
+                    checkValue: true, uncheckValue: false,
                     template: "{common.checkbox()}"
                 },
                 {
-                    id: "Read", header: "Читать", 
-                    checkValue: true, uncheckValue: false, 
-                    template: "{common.checkbox()}", 
+                    id: "Read", header: "Читать",
+                    checkValue: true, uncheckValue: false,
+                    template: "{common.checkbox()}",
                 },
                 {
-                    id: "Edit", header: "Изменить", 
-                    checkValue: true, uncheckValue: false, 
-                    template: "{common.checkbox()}", 
+                    id: "Edit", header: "Изменить",
+                    checkValue: true, uncheckValue: false,
+                    template: "{common.checkbox()}",
                 },
                 {
-                    id: "Delete", header: "Удалить", 
-                    checkValue: true, uncheckValue: false, 
+                    id: "Delete", header: "Удалить",
+                    checkValue: true, uncheckValue: false,
                     template: "{common.checkbox()}",
                 },
             ],
-        };
-
-        const saveButtonUi = {
-            cols: [
-                {},
-                {
-                    view: "button",
-                    label: "Сохранить",
-                    autowidth: true,
-                    css: "webix_primary",
-                    click: async () => await this.OnSave()
-                }
-            ]
         };
 
         return {
@@ -141,108 +133,159 @@ export default class Roles extends JetView {
                 {
                     gravity: 1,
                     rows: [
-                        rolesListLabelUi,
-                        rolesListUi,
-                        createDeleteToolbarUi
+                        roleSGridLabelUi,
+                        rolesGridUi
                     ]
                 },
                 {
-                    gravity: 4,
+                    gravity: 2,
                     rows: [
-                        rulesTableLabelUi,
-                        rulesTableUi,
-                        saveButtonUi
+                        rulesGridLabelUi,
+                        rulesGridUi
                     ]
                 }
             ]
         };
     }
 
-    CreateRole() {
-        webix.prompt({
-            text: "Новая роль",
-            ok: "Да",
-            cancel: "Нет",
-            input: {
-                required: true,
-                placeholder: "Введите название",
-            }
-        }).then((result) => {
-            let newItem = {
-                id: this.RolesToCreate.length,
-                name: result,
-            };
-            this.RolesList.add(newItem);
-            this.RolesList.select(newItem.id);
-            this.RolesToCreate.push(newItem);
-        });
-    }
+    async AddRoleToGridDialog() {
+        try {
+            let result = await webix.prompt({
+                text: "Новая роль",
+                ok: "Да",
+                cancel: "Нет",
+                input: {
+                    required: true,
+                    placeholder: "Введите название",
+                }
+            });
+            if (result) {
+                let newItem = Role.CreateInstance();
+                newItem.name = result;
+                let createdRole = await Role.Insert(newItem);
+                if (createdRole) {
+                    this.$$(this.RolesGridId).add(createdRole);
 
-    DeleteRole() {
-        let item = this.RolesList.getSelectedItem();
-        this.webix.confirm({
-            text: "Удалить роль '" + item.name + "' ?",
-            type: "confirm-warning",
-            ok: "Да",
-            cancel: "Нет",
-            callback: (result) => {
-                if (result) {
-                    this.RolesList.remove(item.id);
-                    this.RolesToDelete.push(item);
+                    let createdRoleRules = RoleRule.CreateInstance(createdRole.id, this.rules);
+                    // let data = this.GenerateRoleRuleData(createdRoleRules);
+                    // this.$$(this.RulesGridId).parse(data);
+                    RoleRule.Update(createdRole.id, createdRoleRules);
                 }
             }
-        });
+        }
+        catch {
+            // supress error
+        }
     }
 
-    async ShowRules(role) {
-        this.RulesTable.clearAll();
+    async LoadRoles() {
+        let table = this.$$(this.RolesGridId);
+        table.parse(Role.LoadFromStorage());
+
+        // Select first role
+        table.select(table.getFirstId());
+    }
+
+    async UpdateRoleInGridDialog(id) {
         try {
-            webix.extend(this.RolesConfig, webix.ProgressBar);
-            this.RolesConfig.showProgress({
+            let table = this.$$(this.RolesGridId);
+            let itemToUpdate = table.getItem(id);
+            let result = await webix.prompt({
+                text: "Роль",
+                ok: "Да",
+                cancel: "Нет",
+                input: {
+                    required: true,
+                    placeholder: "Введите название",
+                    value: itemToUpdate.name
+                }
+            });
+            if (result) {
+                itemToUpdate.name = result;
+                let updateItem = await Role.Update(itemToUpdate);
+                if (updateItem) {
+                    table.updateItem(itemToUpdate.id, itemToUpdate);
+                }
+            }
+        }
+        catch {
+            // supress error
+        }
+    }
+
+    async RemoveRoleFromGridDialog(id) {
+        try {
+            let table = this.$$(this.RolesGridId);
+            let itemToRemove = table.getItem(id);
+            let result = await this.webix.confirm({
+                text: "Удалить роль \"" + itemToRemove.name + "\" ?",
+                type: "confirm-error",
+                ok: "Да",
+                cancel: "Нет"
+            });
+            if (result) {
+                let deletedItem = await Role.Delete(itemToRemove.id);
+                if (deletedItem) {
+                    table.remove(itemToRemove.id);
+                }
+            }
+        }
+        catch {
+            // supress error
+        }
+    }
+
+    GenerateRoleRuleData(roleRules) {
+        let data = [];
+        this.rules.forEach(rule => {
+            let roleRule = roleRules.find(rr => rr.ruleCode == rule.code);
+            if (roleRule !== undefined) {
+                let item = null;
+                if (rule.isCrudOpererationRule) {
+                    item = {
+                        Code: rule.code,
+                        Name: rule.name,
+                        Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
+                    };
+                }
+                else {
+                    item = {
+                        Code: rule.code,
+                        Name: rule.name,
+                        Create: rule.allowChangeFlagCanCreate ? roleRule.canCreate : undefined,
+                        Read: rule.allowChangeFlagCanRead ? roleRule.canRead : undefined,
+                        Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
+                        Delete: rule.allowChangeFlagCanDelete ? roleRule.canDelete : undefined,
+                    };
+                }
+                data.push(item);
+            }
+        });
+        data = data.sort(function (a, b) {
+            return a.Code.localeCompare(b.Code, undefined, { numeric: true, sensitivity: "base" });
+        });
+        return data;
+    }
+
+    async ShowRules() {
+        let thisConfig = this.$$(this.RolesConfigId);
+        let role = this.$$(this.RolesGridId).getSelectedItem();
+        let rulesTable = this.$$(this.RulesGridId);
+        rulesTable.clearAll();
+        try {
+            webix.extend(thisConfig, webix.ProgressBar);
+            thisConfig.showProgress({
                 type: "icon",
             });
-            let roleRules = await my_fetch("GET", "https://dev2.im-dispatcher.ru/api/v1/roles/" + role.id + "/rules");
-
-            let data = [];
-            this.rules.forEach(rule => {
-                let roleRule = roleRules.find(rr => rr.ruleCode == rule.code);
-                if (roleRule !== undefined) {
-                    if (rule.isCrudOpererationRule) {
-                        let item = {
-                            Code: rule.code,
-                            Name: rule.name,
-                            Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
-                        };
-                        data.push(item);
-                    }
-                    else {
-                        let item = {
-                            Code: rule.code,
-                            Name: rule.name,
-                            Create: rule.allowChangeFlagCanCreate ? roleRule.canCreate : undefined,
-                            Read: rule.allowChangeFlagCanRead ? roleRule.canRead : undefined,
-                            Edit: rule.allowChangeFlagCanEdit ? roleRule.canEdit : undefined,
-                            Delete: rule.allowChangeFlagCanDelete ? roleRule.canDelete : undefined,
-                        };
-                        data.push(item);
-                    }
-                }
-            });
-            data = data.sort(function (a, b) {
-                return a.Code.localeCompare(b.Code, undefined, { numeric: true, sensitivity: "base" });
-            });
-            this.RulesTable.parse(data);
+            let roleRules = await RoleRule.Load(role.id);
+            let data = this.GenerateRoleRuleData(roleRules);
+            rulesTable.parse(data);
         }
         catch (e) {
             console.log(e);
         }
         finally {
-            this.RolesConfig.hideProgress();
+            thisConfig.hideProgress();
         }
-    }
-
-    async OnSave() {
-        console.log(this.RolesToCreate);
-        console.log(this.RolesToDelete);
     }
 }

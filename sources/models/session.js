@@ -14,6 +14,7 @@ async function login(login, password) {
         password: password,
         returnUrl: "/"
     };
+    console.log("login");
     var response = await webix.ajax()
         .headers({"Content-type": "application/json"})
         .post("https://dev2.im-dispatcher.ru/api/v1/auth/token", request_body);
@@ -21,11 +22,11 @@ async function login(login, password) {
     localStorage.setItem("accessToken", json.accessToken);
 
     await LoadDictionaries();
-
     return json;
 }
 
 function logout() {
+    console.log("logout");
     return new Promise((resolve) => {
         localStorage.removeItem("accessToken");
         resolve("ok");
