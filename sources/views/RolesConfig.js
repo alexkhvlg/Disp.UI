@@ -160,16 +160,12 @@ export default class Roles extends JetView {
                 }
             });
             if (result) {
-                let newItem = Role.CreateInstance();
-                newItem.name = result;
+                let newItem = Role.CreateInstance(result, this.rules);
                 let createdRole = await Role.Insert(newItem);
                 if (createdRole) {
-                    this.$$(this.RolesGridId).add(createdRole);
-
-                    let createdRoleRules = RoleRule.CreateInstance(createdRole.id, this.rules);
-                    // let data = this.GenerateRoleRuleData(createdRoleRules);
-                    // this.$$(this.RulesGridId).parse(data);
-                    RoleRule.Update(createdRole.id, createdRoleRules);
+                    let table = this.$$(this.RolesGridId);
+                    table.add(createdRole);
+                    table.select(createdRole.id);
                 }
             }
         }
@@ -227,6 +223,8 @@ export default class Roles extends JetView {
                 let deletedItem = await Role.Delete(itemToRemove.id);
                 if (deletedItem) {
                     table.remove(itemToRemove.id);
+                    // Select first role
+                    table.select(table.getFirstId());
                 }
             }
         }

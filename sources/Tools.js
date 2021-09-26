@@ -2,10 +2,12 @@
 
 function get_baseUrl(url) {
     return "https://dev2.im-dispatcher.ru" + url;
+    // return "http://localhost:5001" + url;
 }
 
 function get_token() {
-    return localStorage.getItem("accessToken");
+    let token = localStorage.getItem("accessToken");
+    return token;
 }
 
 function generate_header(method_name, body) {
@@ -27,7 +29,9 @@ function generate_header(method_name, body) {
 }
 
 function my_fetch(method_name, url, body = null) {
-    let response = fetch(get_baseUrl(url), generate_header(method_name, body));
+    let baseUrl = get_baseUrl(url);
+    console.log(baseUrl);
+    let response = fetch(baseUrl, generate_header(method_name, body));
     return response;
 }
 
@@ -74,19 +78,8 @@ function PrintDebug(txt, ...args) {
     }
 }
 
-function SetComboValues(id, values) {
-    var combo = ui(id);
-    combo.define("options", values);
-    if (Array.isArray(values)) {
-        if (values.length > 0) {
-            combo.setValue(values[0]);
-        }
-    }
-    combo.refresh();
-}
-
 function unix_to_date(s, options) {
     return new Date(s * 1e3).toLocaleString("ru-RU", options);
 }
 
-export { my_fetch, response_ok, DateISO8601, PrintDebug, SetComboValues, unix_to_date };
+export { get_baseUrl, my_fetch, response_ok, DateISO8601, PrintDebug, unix_to_date };

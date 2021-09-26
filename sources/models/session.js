@@ -1,5 +1,6 @@
 "use strict";
 
+import { get_baseUrl } from "../Tools";
 import { LoadDictionaries } from "./dictionaries";
 
 function status() {
@@ -17,7 +18,7 @@ async function login(login, password) {
     console.log("login");
     var response = await webix.ajax()
         .headers({"Content-type": "application/json"})
-        .post("https://dev2.im-dispatcher.ru/api/v1/auth/token", request_body);
+        .post(get_baseUrl("/api/v1/auth/token"), request_body);
     var json = await response.json();
     localStorage.setItem("accessToken", json.accessToken);
 

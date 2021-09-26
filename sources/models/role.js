@@ -10,11 +10,26 @@ export class Role {
         return JSON.parse(GetDict(DictNames.Roles));
     }
 
-    static CreateInstance() {
+    static CreateInstance(name, rules) {
+        let roleRules = [];
+        rules.forEach(rule => {
+            let roleRule = {
+                roleId: rule.id,
+                ruleId: rule.id,
+                ruleCode: rule.code,
+                canCreate: false,
+                canRead: false,
+                canEdit: false,
+                canDelete: false,
+                isCrudOperationRule: rule.isCrudOperationRule ? true : false
+            };
+            roleRules.push(roleRule);
+        });
         return {
             id: -1,
-            name: "",
-            isActive: true
+            name: name,
+            isActive: true,
+            rules: roleRules
         };
     }
 

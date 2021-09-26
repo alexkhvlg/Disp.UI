@@ -14,18 +14,17 @@ export class RoleRule {
     }
 
     static CreateInstance(roleId, rules) {
-        console.log("CreateInstance RoleRule");
         let roleRules = [];
         rules.forEach(rule => {
             let roleRule = {
                 roleId: roleId,
-                ruleId: rule.Id,
+                ruleId: rule.id,
                 ruleCode: rule.code,
                 canCreate: rule.allowChangeFlagCanCreate,
                 canRead: rule.allowChangeFlagCanRead,
                 canEdit: rule.allowChangeFlagCanEdit,
                 canDelete: rule.allowChangeFlagCanDelete,
-                isCrudOperationRule: rule.isCrudOperationRule
+                isCrudOperationRule: rule.isCrudOperationRule ? true : false
             };
             roleRules.push(roleRule);
         });
